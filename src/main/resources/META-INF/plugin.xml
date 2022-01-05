@@ -1,12 +1,19 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
     <id>com.github.sudison.c3langintellij</id>
-    <name>c3lang-intellij</name>
+    <name>c3lang</name>
     <vendor>sudison</vendor>
 
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
+         <fileType name="C3" implementationClass="org.c3lang.intellijplugin.C3FileType"
+                   fieldName="INSTANCE" language="C3" extensions="c3"/>
+         <lang.parserDefinition language="C3"
+                                implementationClass="org.c3lang.intellijplugin.C3ParserDefinition"/>
+         <lang.syntaxHighlighterFactory
+                 language="C3"
+                 implementationClass="org.c3lang.intellijplugin.C3SyntaxHighlighterFactory"/>
         <applicationService serviceImplementation="com.github.sudison.c3langintellij.services.MyApplicationService"/>
         <projectService serviceImplementation="com.github.sudison.c3langintellij.services.MyProjectService"/>
     </extensions>
