@@ -11,9 +11,10 @@ import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.tree.IElementType
 import org.c3lang.intellijplugin.lexer.C3LexerAdapter
 import org.c3lang.intellijplugin.parser.psi.C3Types
+import kotlin.reflect.full.declaredMembers
 
 object C3SyntaxHighlighter : SyntaxHighlighterBase() {
-    private val keywords = listOf(C3Types.FUNC_KW)
+    private val keywords = C3Types::class.declaredMembers.filter { it.name.contains("KW") }.map { it.call() }
     private val keywordsAttrs =
         arrayOf(TextAttributesKey.createTextAttributesKey("C3_KEYWORD", DefaultLanguageHighlighterColors.KEYWORD))
 

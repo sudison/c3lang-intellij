@@ -25,6 +25,9 @@ sourceSets["main"].java.srcDirs("src/main/gen")
 repositories {
     mavenCentral()
 }
+dependencies {
+    implementation("org.junit.jupiter:junit-jupiter:5.8.1")
+}
 
 // Configure Gradle IntelliJ Plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
 intellij {
