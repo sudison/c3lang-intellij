@@ -27,21 +27,15 @@ public class C3SelectionStatementImpl extends ASTWrapperPsiElement implements C3
   }
 
   @Override
-  @Nullable
-  public C3CompoundStatement getCompoundStatement() {
-    return findChildByClass(C3CompoundStatement.class);
+  @NotNull
+  public List<C3CompoundStatement> getCompoundStatementList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, C3CompoundStatement.class);
   }
 
   @Override
   @NotNull
   public C3DeclExprList getDeclExprList() {
     return findNotNullChildByClass(C3DeclExprList.class);
-  }
-
-  @Override
-  @Nullable
-  public C3Statement getStatement() {
-    return findChildByClass(C3Statement.class);
   }
 
 }

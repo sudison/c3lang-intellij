@@ -2391,8 +2391,7 @@ public class C3Parser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // SWITCH_KW LP decl_expr_list RP compound_statement
-  //     | IF_KW LP decl_expr_list RP statement
-  //     | IF_KW LP decl_expr_list RP compound_statement ELSE_KW compound_statement
+  //     | IF_KW LP decl_expr_list RP compound_statement (ELSE_KW compound_statement)?
   public static boolean selection_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "selection_statement")) return false;
     if (!nextTokenIs(b, "<selection statement>", IF_KW, SWITCH_KW)) return false;
@@ -2400,7 +2399,6 @@ public class C3Parser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _NONE_, SELECTION_STATEMENT, "<selection statement>");
     r = selection_statement_0(b, l + 1);
     if (!r) r = selection_statement_1(b, l + 1);
-    if (!r) r = selection_statement_2(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -2418,7 +2416,7 @@ public class C3Parser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // IF_KW LP decl_expr_list RP statement
+  // IF_KW LP decl_expr_list RP compound_statement (ELSE_KW compound_statement)?
   private static boolean selection_statement_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "selection_statement_1")) return false;
     boolean r;
@@ -2426,21 +2424,25 @@ public class C3Parser implements PsiParser, LightPsiParser {
     r = consumeTokens(b, 0, IF_KW, LP);
     r = r && decl_expr_list(b, l + 1);
     r = r && consumeToken(b, RP);
-    r = r && statement(b, l + 1);
+    r = r && compound_statement(b, l + 1);
+    r = r && selection_statement_1_5(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // IF_KW LP decl_expr_list RP compound_statement ELSE_KW compound_statement
-  private static boolean selection_statement_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "selection_statement_2")) return false;
+  // (ELSE_KW compound_statement)?
+  private static boolean selection_statement_1_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "selection_statement_1_5")) return false;
+    selection_statement_1_5_0(b, l + 1);
+    return true;
+  }
+
+  // ELSE_KW compound_statement
+  private static boolean selection_statement_1_5_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "selection_statement_1_5_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, IF_KW, LP);
-    r = r && decl_expr_list(b, l + 1);
-    r = r && consumeToken(b, RP);
-    r = r && compound_statement(b, l + 1);
-    r = r && consumeToken(b, ELSE_KW);
+    r = consumeToken(b, ELSE_KW);
     r = r && compound_statement(b, l + 1);
     exit_section_(b, m, null, r);
     return r;

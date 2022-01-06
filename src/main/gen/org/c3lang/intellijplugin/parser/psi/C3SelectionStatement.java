@@ -7,13 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface C3SelectionStatement extends PsiElement {
 
-  @Nullable
-  C3CompoundStatement getCompoundStatement();
+  @NotNull
+  List<C3CompoundStatement> getCompoundStatementList();
 
   @NotNull
   C3DeclExprList getDeclExprList();
-
-  @Nullable
-  C3Statement getStatement();
 
 }
