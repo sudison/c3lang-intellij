@@ -4,6 +4,7 @@ import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
 import org.c3lang.intellijplugin.parser.psi.C3Type;
 import org.c3lang.intellijplugin.parser.psi.C3Types;
+import org.c3lang.intellijplugin.parser.psi.C3ElementType;
 import com.intellij.psi.TokenType;
 
 %%
@@ -48,6 +49,7 @@ DECIMAL_DIGITS  = {DIGIT} ("_"* {DIGIT})*
 BINARY_DIGITS   = {BINARY_DIGIT} ("_"* {BINARY_DIGIT})*
 OCTAL_DIGITS    = {OCTAL_DIGIT} ("_"* {OCTAL_DIGIT})*
 HEX_DIGITS      = {HEX_DIGIT} ("_"* {HEX_DIGIT})*
+EndOfLineComment = "//" [^\n]* \n?
 
 %%
 
@@ -159,6 +161,7 @@ HEX_DIGITS      = {HEX_DIGIT} ("_"* {HEX_DIGIT})*
     {CT_IDENT} { return C3Types.CT_IDENT; }
 
     {WHITESPACE} { return TokenType.WHITE_SPACE; }
+    {EndOfLineComment} { return C3ElementType.Companion.getEND_OF_LINE_COMMENTS();}
 }
 
 [^]  { return TokenType.BAD_CHARACTER; }
