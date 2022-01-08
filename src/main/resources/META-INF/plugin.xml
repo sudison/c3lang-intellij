@@ -14,6 +14,9 @@
          <lang.syntaxHighlighterFactory
                  language="C3"
                  implementationClass="org.c3lang.intellijplugin.C3SyntaxHighlighterFactory"/>
+        <programRunner implementation="org.c3lang.intellijplugin.runner.C3Runner"/>
+        <configurationType implementation="org.c3lang.intellijplugin.runner.C3RunnerConfigType"/>
+
         <applicationService serviceImplementation="com.github.sudison.c3langintellij.services.MyApplicationService"/>
         <projectService serviceImplementation="com.github.sudison.c3langintellij.services.MyProjectService"/>
     </extensions>
