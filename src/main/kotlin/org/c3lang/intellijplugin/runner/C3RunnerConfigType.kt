@@ -54,14 +54,15 @@ class C3ProcessHandler(
 open class C3CompilerOutputFilter(
     private val environment: ExecutionEnvironment
 ) : Filter, DumbAware {
-    private val lineRegx = "\\((.*.c3):(\\d*)\\).*\n".toRegex()
+    private val lineRegx = "\\((.*.c3):(\\d*):(\\d*)\\).*\n".toRegex()
     override fun applyFilter(line: String, entireLength: Int): Filter.Result? {
         val matchResult = lineRegx.matchEntire(line) ?: return null
         val filePath = matchResult.groups[1]!!.value
         val lineNumber = max(0, matchResult.groups[2]!!.value.toInt() - 1)
+        val columnNumber = max(0, matchResult.groups[3]!!.value.toInt() - 1)
 
         val file = environment.project.baseDir?.findFileByRelativePath(filePath) ?: return null
-        val link = OpenFileHyperlinkInfo(environment.project, file, lineNumber)
+        val link = OpenFileHyperlinkInfo(environment.project, file, lineNumber, columnNumber)
         val lineStart = entireLength - line.length
 
         val end = matchResult.groups[1]!!.range.last
