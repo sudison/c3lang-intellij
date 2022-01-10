@@ -44,6 +44,7 @@ public interface C3Types {
   IElementType EXPRESSION = new C3ElementType("EXPRESSION");
   IElementType EXPRESSION_LIST = new C3ElementType("EXPRESSION_LIST");
   IElementType EXPRESSION_STATEMENT = new C3ElementType("EXPRESSION_STATEMENT");
+  IElementType EXTERNAL_FUNC_DECLARATION = new C3ElementType("EXTERNAL_FUNC_DECLARATION");
   IElementType FAILABLE_TYPE = new C3ElementType("FAILABLE_TYPE");
   IElementType FLOAT_TYPE = new C3ElementType("FLOAT_TYPE");
   IElementType FOR_STATEMENT = new C3ElementType("FOR_STATEMENT");
@@ -164,6 +165,7 @@ public interface C3Types {
   IElementType EQ = new C3TokenType("EQ");
   IElementType EQ_OP = new C3TokenType("EQ_OP");
   IElementType ERROR_KW = new C3TokenType("ERROR_KW");
+  IElementType EXTERN_KW = new C3TokenType("EXTERN_KW");
   IElementType FLOAT_KW = new C3TokenType("FLOAT_KW");
   IElementType FN_BLOCK_END = new C3TokenType("FN_BLOCK_END");
   IElementType FN_BLOCK_START = new C3TokenType("FN_BLOCK_START");
@@ -346,6 +348,9 @@ public interface C3Types {
       }
       else if (type == EXPRESSION_STATEMENT) {
         return new C3ExpressionStatementImpl(node);
+      }
+      else if (type == EXTERNAL_FUNC_DECLARATION) {
+        return new C3ExternalFuncDeclarationImpl(node);
       }
       else if (type == FAILABLE_TYPE) {
         return new C3FailableTypeImpl(node);

@@ -41,6 +41,7 @@ visibility ::= LOCAL_KW PUBLIC_KW? | PUBLIC_KW LOCAL_KW?
 
 top_level ::= global_declaration
     | const_declaration
+    | external_func_declaration
     | func_definition
     | conditional_compilation
     | struct_declaration
@@ -286,5 +287,7 @@ parameter_type_list ::= LP (parameter_list (',' type? ELLIPSIS)?)? RP
 func_declaration ::= FUNC_KW failable_type IDENT parameter_type_list attributes?
 
 func_definition ::=  func_declaration compound_statement?
+
+external_func_declaration ::= EXTERN_KW func_declaration EOS
 
 error_declaration ::= ERROR_KW TYPE_IDENT ((LBR struct_body RBR) | EOS)

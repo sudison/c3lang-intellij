@@ -155,6 +155,10 @@ public class C3Visitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitExternalFuncDeclaration(@NotNull C3ExternalFuncDeclaration o) {
+    visitPsiElement(o);
+  }
+
   public void visitFailableType(@NotNull C3FailableType o) {
     visitPsiElement(o);
   }

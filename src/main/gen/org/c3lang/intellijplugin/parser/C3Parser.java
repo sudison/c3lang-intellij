@@ -1165,6 +1165,20 @@ public class C3Parser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // EXTERN_KW func_declaration EOS
+  public static boolean external_func_declaration(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "external_func_declaration")) return false;
+    if (!nextTokenIs(b, EXTERN_KW)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, EXTERN_KW);
+    r = r && func_declaration(b, l + 1);
+    r = r && consumeToken(b, EOS);
+    exit_section_(b, m, EXTERNAL_FUNC_DECLARATION, r);
+    return r;
+  }
+
+  /* ********************************************************** */
   // type BANG?
   public static boolean failable_type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "failable_type")) return false;
@@ -2964,6 +2978,7 @@ public class C3Parser implements PsiParser, LightPsiParser {
   /* ********************************************************** */
   // global_declaration
   //     | const_declaration
+  //     | external_func_declaration
   //     | func_definition
   //     | conditional_compilation
   //     | struct_declaration
@@ -2979,6 +2994,7 @@ public class C3Parser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _NONE_, TOP_LEVEL, "<top level>");
     r = global_declaration(b, l + 1);
     if (!r) r = const_declaration(b, l + 1);
+    if (!r) r = external_func_declaration(b, l + 1);
     if (!r) r = func_definition(b, l + 1);
     if (!r) r = conditional_compilation(b, l + 1);
     if (!r) r = struct_declaration(b, l + 1);

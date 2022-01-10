@@ -52,6 +52,12 @@ public class C3TopLevelImpl extends ASTWrapperPsiElement implements C3TopLevel {
 
   @Override
   @Nullable
+  public C3ExternalFuncDeclaration getExternalFuncDeclaration() {
+    return findChildByClass(C3ExternalFuncDeclaration.class);
+  }
+
+  @Override
+  @Nullable
   public C3FuncDefinition getFuncDefinition() {
     return findChildByClass(C3FuncDefinition.class);
   }

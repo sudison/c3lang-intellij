@@ -20,6 +20,9 @@ public interface C3TopLevel extends PsiElement {
   C3ErrorDeclaration getErrorDeclaration();
 
   @Nullable
+  C3ExternalFuncDeclaration getExternalFuncDeclaration();
+
+  @Nullable
   C3FuncDefinition getFuncDefinition();
 
   @Nullable

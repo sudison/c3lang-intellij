@@ -68,6 +68,7 @@ EndOfLineComment = "//" [^\n]* \n?
     "else" { return C3Types.ELSE_KW; }
     "error" { return C3Types.ELSE_KW; }
     "enum" { return C3Types.ENUM_KW; }
+    "extern" { return C3Types.EXTERN_KW; }
     "for" { return C3Types.FOR_KW; }
     "fn" { return C3Types.FUNC_KW; }
     "if" { return C3Types.IF_KW; }
