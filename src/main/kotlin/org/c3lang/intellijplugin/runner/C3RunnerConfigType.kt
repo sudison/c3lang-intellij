@@ -23,6 +23,9 @@ import com.intellij.ui.EditorTextField
 import com.intellij.ui.components.Label
 import com.intellij.ui.layout.CCFlags
 import com.intellij.ui.layout.panel
+import org.c3lang.intellijplugin.utils.readString
+import org.c3lang.intellijplugin.utils.writeString
+import org.jdom.Element
 import javax.swing.Icon
 import javax.swing.JComponent
 import javax.swing.event.DocumentEvent
@@ -117,6 +120,7 @@ fun pathTextField(
 }
 
 class C3RunnerConfigurationEditor(
+    val project: Project,
 ) : SettingsEditor<C3CommandConfiguration>() {
 
     private val command: TextFieldWithBrowseButton =
@@ -162,9 +166,20 @@ class C3CommandConfiguration(
     }
 
     override fun getConfigurationEditor(): SettingsEditor<out RunConfiguration> {
-        return C3RunnerConfigurationEditor()
+        return C3RunnerConfigurationEditor(project)
     }
 
+    override fun writeExternal(element: Element) {
+        super.writeExternal(element)
+        element.writeString("command", command)
+        element.writeString("args", args)
+    }
+
+    override fun readExternal(element: Element) {
+        super.readExternal(element)
+        command = element.readString("command") ?: ""
+        args = element.readString("args") ?: ""
+    }
 }
 
 class C3ConfigurationFactory(type: C3RunnerConfigType) : ConfigurationFactory(type) {
