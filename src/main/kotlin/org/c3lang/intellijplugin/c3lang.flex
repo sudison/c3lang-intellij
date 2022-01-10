@@ -79,7 +79,7 @@ EndOfLineComment = "//" [^\n]* \n?
     "null" { return C3Types.NULL_KW; }
     "local" { return C3Types.LOCAL_KW; }
     "public" { return C3Types.PUBLIC_KW; }
-    "return" { return C3Types.PUBLIC_KW; }
+    "return" { return C3Types.RETURN_KW; }
     "switch" { return C3Types.SWITCH_KW; }
     "try" { return C3Types.TRY_KW; }
     "typedef" { return C3Types.TYPEDEF_KW; }

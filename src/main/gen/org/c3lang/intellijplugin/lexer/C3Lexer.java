@@ -84,11 +84,11 @@ class C3Lexer implements FlexLexer {
     "\1\110\1\111\1\40\1\112\1\3\1\113\1\3\1\114"+
     "\4\3\1\115\1\116\2\3\1\117\1\120\1\3\1\121"+
     "\1\3\1\122\2\40\1\123\1\124\2\3\1\125\1\126"+
-    "\1\127\1\3\1\130\1\131\1\40\1\3\1\132\1\133"+
-    "\1\134\1\135";
+    "\1\127\1\3\1\130\1\131\1\132\1\40\1\3\1\133"+
+    "\1\134\1\135\1\136";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[248];
+    int [] result = new int[249];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -143,10 +143,11 @@ class C3Lexer implements FlexLexer {
     "\0\u25c8\0\u2606\0\u2644\0\u2682\0\272\0\272\0\u26c0\0\u26fe"+
     "\0\272\0\272\0\u273c\0\272\0\u277a\0\272\0\u27b8\0\u27f6"+
     "\0\272\0\272\0\u2834\0\u2872\0\272\0\272\0\272\0\u28b0"+
-    "\0\272\0\u0a2c\0\u28ee\0\u292c\0\272\0\272\0\u0a2c\0\272";
+    "\0\272\0\272\0\u0a2c\0\u28ee\0\u292c\0\272\0\272\0\u0a2c"+
+    "\0\272";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[248];
+    int [] result = new int[249];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -340,14 +341,14 @@ class C3Lexer implements FlexLexer {
     "\10\4\3\0\10\4\1\0\3\4\1\357\17\4\27\0"+
     "\10\4\3\0\10\4\1\0\13\4\1\360\7\4\27\0"+
     "\10\4\3\0\10\4\1\0\3\4\1\361\17\4\27\0"+
-    "\10\4\3\0\10\4\1\0\5\4\1\352\15\4\27\0"+
-    "\10\74\3\0\10\74\1\0\17\74\1\362\3\74\27\0"+
-    "\10\74\3\0\10\74\1\0\13\74\1\363\7\74\27\0"+
-    "\10\4\3\0\10\4\1\0\11\4\1\364\11\4\27\0"+
-    "\4\4\1\365\3\4\3\0\10\4\1\0\23\4\27\0"+
-    "\10\4\3\0\10\4\1\0\6\4\1\366\14\4\27\0"+
-    "\10\74\3\0\10\74\1\0\6\74\1\367\14\74\27\0"+
-    "\10\4\3\0\10\4\1\0\3\4\1\370\17\4\26\0";
+    "\10\4\3\0\10\4\1\0\5\4\1\362\15\4\27\0"+
+    "\10\74\3\0\10\74\1\0\17\74\1\363\3\74\27\0"+
+    "\10\74\3\0\10\74\1\0\13\74\1\364\7\74\27\0"+
+    "\10\4\3\0\10\4\1\0\11\4\1\365\11\4\27\0"+
+    "\4\4\1\366\3\4\3\0\10\4\1\0\23\4\27\0"+
+    "\10\4\3\0\10\4\1\0\6\4\1\367\14\4\27\0"+
+    "\10\74\3\0\10\74\1\0\6\74\1\370\14\74\27\0"+
+    "\10\4\3\0\10\4\1\0\3\4\1\371\17\4\26\0";
 
   private static int [] zzUnpackTrans() {
     int [] result = new int[10602];
@@ -391,10 +392,10 @@ class C3Lexer implements FlexLexer {
     "\1\0\1\11\6\1\1\11\27\1\1\11\1\1\1\11"+
     "\1\1\1\11\2\1\1\11\1\1\1\11\1\1\10\11"+
     "\2\1\1\0\3\1\1\0\3\1\1\0\6\1\3\0"+
-    "\43\1\12\11\21\1\1\11\35\1\1\11\124\1";
+    "\43\1\12\11\21\1\1\11\35\1\1\11\125\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[248];
+    int [] result = new int[249];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -711,467 +712,472 @@ class C3Lexer implements FlexLexer {
             { return TokenType.BAD_CHARACTER;
             } 
             // fall through
-          case 94: break;
+          case 95: break;
           case 2: 
             { return C3Types.CONST_IDENT;
             } 
             // fall through
-          case 95: break;
+          case 96: break;
           case 3: 
             { return C3Types.IDENT;
             } 
             // fall through
-          case 96: break;
+          case 97: break;
           case 4: 
             { return C3Types.INT_LITERAL;
             } 
             // fall through
-          case 97: break;
+          case 98: break;
           case 5: 
             { return TokenType.WHITE_SPACE;
             } 
             // fall through
-          case 98: break;
+          case 99: break;
           case 6: 
             { return C3Types.DIV_OP;
             } 
             // fall through
-          case 99: break;
+          case 100: break;
           case 7: 
             { return C3Types.DOT;
             } 
             // fall through
-          case 100: break;
+          case 101: break;
           case 8: 
             { return C3Types.COLON;
             } 
             // fall through
-          case 101: break;
+          case 102: break;
           case 9: 
             { return C3Types.LP;
             } 
             // fall through
-          case 102: break;
+          case 103: break;
           case 10: 
             { return C3Types.LBR;
             } 
             // fall through
-          case 103: break;
+          case 104: break;
           case 11: 
             { return C3Types.RBR;
             } 
             // fall through
-          case 104: break;
+          case 105: break;
           case 12: 
             { return C3Types.RP;
             } 
             // fall through
-          case 105: break;
+          case 106: break;
           case 13: 
             { return C3Types.LT_OP;
             } 
             // fall through
-          case 106: break;
+          case 107: break;
           case 14: 
             { return C3Types.EQ;
             } 
             // fall through
-          case 107: break;
+          case 108: break;
           case 15: 
             { return C3Types.GT_OP;
             } 
             // fall through
-          case 108: break;
+          case 109: break;
           case 16: 
             { return C3Types.ADD_OP;
             } 
             // fall through
-          case 109: break;
+          case 110: break;
           case 17: 
             { return C3Types.MOD_OP;
             } 
             // fall through
-          case 110: break;
+          case 111: break;
           case 18: 
             { return C3Types.SUB_OP;
             } 
             // fall through
-          case 111: break;
+          case 112: break;
           case 19: 
             { return C3Types.AT;
             } 
             // fall through
-          case 112: break;
+          case 113: break;
           case 20: 
             { return C3Types.QUESTION;
             } 
             // fall through
-          case 113: break;
+          case 114: break;
           case 21: 
             { return C3Types.BANG;
             } 
             // fall through
-          case 114: break;
+          case 115: break;
           case 22: 
             { return C3Types.EOS;
             } 
             // fall through
-          case 115: break;
+          case 116: break;
           case 23: 
             { return C3Types.COMMA;
             } 
             // fall through
-          case 116: break;
+          case 117: break;
           case 24: 
             { return C3Types.STAR;
             } 
             // fall through
-          case 117: break;
+          case 118: break;
           case 25: 
             { return C3Types.BIT_XOR_OP;
             } 
             // fall through
-          case 118: break;
+          case 119: break;
           case 26: 
             { return C3Types.BIT_OR_OP;
             } 
             // fall through
-          case 119: break;
+          case 120: break;
           case 27: 
             { return C3Types.LB;
             } 
             // fall through
-          case 120: break;
+          case 121: break;
           case 28: 
             { return C3Types.RB;
             } 
             // fall through
-          case 121: break;
+          case 122: break;
           case 29: 
             { return C3Types.TYPE_IDENT;
             } 
             // fall through
-          case 122: break;
+          case 123: break;
           case 30: 
             { return C3Types.FUNC_KW;
             } 
             // fall through
-          case 123: break;
+          case 124: break;
           case 31: 
             { return C3Types.CT_CONST_IDENT;
             } 
             // fall through
-          case 124: break;
+          case 125: break;
           case 32: 
             { return C3Types.CT_IDENT;
             } 
             // fall through
-          case 125: break;
+          case 126: break;
           case 33: 
             { return C3ElementType.Companion.getEND_OF_LINE_COMMENTS();
             } 
             // fall through
-          case 126: break;
+          case 127: break;
           case 34: 
             { return C3Types.AS_KW;
             } 
             // fall through
-          case 127: break;
+          case 128: break;
           case 35: 
             { return C3Types.IF_KW;
             } 
             // fall through
-          case 128: break;
+          case 129: break;
           case 36: 
             { return C3Types.IN_KW;
             } 
             // fall through
-          case 129: break;
+          case 130: break;
           case 37: 
             { return C3Types.DO_KW;
             } 
             // fall through
-          case 130: break;
+          case 131: break;
           case 38: 
             { return C3Types.DOTDOT;
             } 
             // fall through
-          case 131: break;
+          case 132: break;
           case 39: 
             { return C3Types.SCOPE;
             } 
             // fall through
-          case 132: break;
+          case 133: break;
           case 40: 
             { return C3Types.FN_BLOCK_START;
             } 
             // fall through
-          case 133: break;
+          case 134: break;
           case 41: 
             { return C3Types.FN_BLOCK_END;
             } 
             // fall through
-          case 134: break;
+          case 135: break;
           case 42: 
             { return C3Types.LE_OP;
             } 
             // fall through
-          case 135: break;
+          case 136: break;
           case 43: 
             { return C3Types.GE_OP;
             } 
             // fall through
-          case 136: break;
+          case 137: break;
           case 44: 
             { return C3Types.INC_OP;
             } 
             // fall through
-          case 137: break;
+          case 138: break;
           case 45: 
             { return C3Types.ADD_MOD_OP;
             } 
             // fall through
-          case 138: break;
+          case 139: break;
           case 46: 
             { return C3Types.SUB_MOD_OP;
             } 
             // fall through
-          case 139: break;
+          case 140: break;
           case 47: 
             { return C3Types.DEC_OP;
             } 
             // fall through
-          case 140: break;
+          case 141: break;
           case 48: 
             { return C3Types.ELVIS;
             } 
             // fall through
-          case 141: break;
+          case 142: break;
           case 49: 
             { return C3Types.FOR_KW;
             } 
             // fall through
-          case 142: break;
+          case 143: break;
           case 50: 
             { return C3Types.CT_TYPE_IDENT;
             } 
             // fall through
-          case 143: break;
+          case 144: break;
           case 51: 
             { return C3Types.CTIF_KW;
             } 
             // fall through
-          case 144: break;
+          case 145: break;
           case 52: 
             { return C3Types.TRY_KW;
             } 
             // fall through
-          case 145: break;
+          case 146: break;
           case 53: 
             { return C3Types.INT_KW;
             } 
             // fall through
-          case 146: break;
+          case 147: break;
           case 54: 
             { return C3Types.ELLIPSIS;
             } 
             // fall through
-          case 147: break;
+          case 148: break;
           case 55: 
             { return C3Types.CTFOR_KW;
             } 
             // fall through
-          case 148: break;
+          case 149: break;
           case 56: 
             { return C3Types.VOID_KW;
             } 
             // fall through
-          case 149: break;
+          case 150: break;
           case 57: 
             { return C3Types.BOOL_KW;
             } 
             // fall through
-          case 150: break;
+          case 151: break;
           case 58: 
             { return C3Types.BYTE_KW;
             } 
             // fall through
-          case 151: break;
+          case 152: break;
           case 59: 
             { return C3Types.ENUM_KW;
             } 
             // fall through
-          case 152: break;
+          case 153: break;
           case 60: 
             { return C3Types.ELSE_KW;
             } 
             // fall through
-          case 153: break;
+          case 154: break;
           case 61: 
             { return C3Types.CASE_KW;
             } 
             // fall through
-          case 154: break;
+          case 155: break;
           case 62: 
             { return C3Types.CAST_KW;
             } 
             // fall through
-          case 155: break;
+          case 156: break;
           case 63: 
             { return C3Types.CHAR_KW;
             } 
             // fall through
-          case 156: break;
+          case 157: break;
           case 64: 
             { return C3Types.NEXT_KW;
             } 
             // fall through
-          case 157: break;
+          case 158: break;
           case 65: 
             { return C3Types.NULL_KW;
             } 
             // fall through
-          case 158: break;
+          case 159: break;
           case 66: 
             { return C3Types.UINT_KW;
             } 
             // fall through
-          case 159: break;
+          case 160: break;
           case 67: 
             { return C3Types.LONG_KW;
             } 
             // fall through
-          case 160: break;
+          case 161: break;
           case 68: 
             { return C3Types.HALF_KW;
             } 
             // fall through
-          case 161: break;
+          case 162: break;
           case 69: 
             { return C3Types.QUAD_KW;
             } 
             // fall through
-          case 162: break;
+          case 163: break;
           case 70: 
             { return C3Types.FLOAT_KW;
             } 
             // fall through
-          case 163: break;
+          case 164: break;
           case 71: 
             { return C3Types.CTELSE_KW;
             } 
             // fall through
-          case 164: break;
+          case 165: break;
           case 72: 
             { return C3Types.CTELIF_KW;
             } 
             // fall through
-          case 165: break;
+          case 166: break;
           case 73: 
             { return C3Types.CTCASE_KW;
             } 
             // fall through
-          case 166: break;
+          case 167: break;
           case 74: 
             { return C3Types.BREAK_KW;
             } 
             // fall through
-          case 167: break;
+          case 168: break;
           case 75: 
             { return C3Types.SHORT_KW;
             } 
             // fall through
-          case 168: break;
+          case 169: break;
           case 76: 
             { return C3Types.CONST_KW;
             } 
             // fall through
-          case 169: break;
+          case 170: break;
           case 77: 
             { return C3Types.UNION_KW;
             } 
             // fall through
-          case 170: break;
+          case 171: break;
           case 78: 
             { return C3Types.ULONG_KW;
             } 
             // fall through
-          case 171: break;
+          case 172: break;
           case 79: 
             { return C3Types.DEFER_KW;
             } 
             // fall through
-          case 172: break;
+          case 173: break;
           case 80: 
             { return C3Types.LOCAL_KW;
             } 
             // fall through
-          case 173: break;
+          case 174: break;
           case 81: 
             { return C3Types.MACRO_KW;
             } 
             // fall through
-          case 174: break;
+          case 175: break;
           case 82: 
             { return C3Types.WHILE_KW;
             } 
             // fall through
-          case 175: break;
+          case 176: break;
           case 83: 
             { return C3Types.SWITCH_KW;
             } 
             // fall through
-          case 176: break;
+          case 177: break;
           case 84: 
-            { return C3Types.PUBLIC_KW;
+            { return C3Types.RETURN_KW;
             } 
             // fall through
-          case 177: break;
+          case 178: break;
           case 85: 
             { return C3Types.IMPORT_KW;
             } 
             // fall through
-          case 178: break;
+          case 179: break;
           case 86: 
             { return C3Types.USHORT_KW;
             } 
             // fall through
-          case 179: break;
+          case 180: break;
           case 87: 
             { return C3Types.DOUBLE_KW;
             } 
             // fall through
-          case 180: break;
+          case 181: break;
           case 88: 
             { return C3Types.MODULE_KW;
             } 
             // fall through
-          case 181: break;
-          case 89: 
-            { return C3Types.CTSWITCH_KW;
-            } 
-            // fall through
           case 182: break;
-          case 90: 
-            { return C3Types.TYPEDEF_KW;
+          case 89: 
+            { return C3Types.PUBLIC_KW;
             } 
             // fall through
           case 183: break;
-          case 91: 
-            { return C3Types.DEFAULT_KW;
+          case 90: 
+            { return C3Types.CTSWITCH_KW;
             } 
             // fall through
           case 184: break;
-          case 92: 
-            { return C3Types.CTDEFAULT_KW;
+          case 91: 
+            { return C3Types.TYPEDEF_KW;
             } 
             // fall through
           case 185: break;
-          case 93: 
-            { return C3Types.CONTINUE_KW;
+          case 92: 
+            { return C3Types.DEFAULT_KW;
             } 
             // fall through
           case 186: break;
+          case 93: 
+            { return C3Types.CTDEFAULT_KW;
+            } 
+            // fall through
+          case 187: break;
+          case 94: 
+            { return C3Types.CONTINUE_KW;
+            } 
+            // fall through
+          case 188: break;
           default:
             zzScanError(ZZ_NO_MATCH);
           }
