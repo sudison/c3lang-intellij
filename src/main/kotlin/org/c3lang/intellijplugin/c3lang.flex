@@ -118,6 +118,8 @@ STRING_LITERAL = \".*\"
     ".." { return C3Types.DOTDOT; }
     "<=" { return C3Types.LE_OP; }
     ">=" { return C3Types.GE_OP; }
+    "!=" { return C3Types.NE_OP; }
+    "==" { return C3Types.EQ_OP; }
     "+%" { return C3Types.ADD_MOD_OP; }
     "-%" { return C3Types.SUB_MOD_OP; }
     "++" { return C3Types.INC_OP; }
