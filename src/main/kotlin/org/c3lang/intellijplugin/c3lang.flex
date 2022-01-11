@@ -113,7 +113,6 @@ STRING_LITERAL = \".*\"
     "quad" { return C3Types.QUAD_KW; }
 
     "..." { return C3Types.ELLIPSIS; }
-    "::" { return C3Types.SCOPE; }
     "({" { return C3Types.FN_BLOCK_START; }
     "})" { return C3Types.FN_BLOCK_END; }
     ".." { return C3Types.DOTDOT; }

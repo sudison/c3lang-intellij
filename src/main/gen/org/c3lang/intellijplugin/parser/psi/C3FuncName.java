@@ -5,15 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface C3FuncDeclaration extends PsiElement {
-
-  @NotNull
-  C3FailableType getFailableType();
-
-  @NotNull
-  C3FuncName getFuncName();
-
-  @NotNull
-  C3ParameterTypeList getParameterTypeList();
+public interface C3FuncName extends PsiElement {
 
 }

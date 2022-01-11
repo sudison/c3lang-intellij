@@ -25,9 +25,9 @@ specified_import_list ::= specified_import (COMMA specified_import)*
 
 import_decl ::= IMPORT_KW import_path (COLON specified_import_list)? EOS
 
-import_path ::= IDENT (SCOPE IDENT)*
+import_path ::= IDENT (DOT IDENT)*
 
-path ::= (IDENT SCOPE)+
+path ::= (IDENT DOT)+
 
 module_param ::= CT_IDENT | HASH_IDENT | TYPE_IDENT | CT_TYPE_IDENT | IDENT
 
@@ -284,7 +284,8 @@ parameter_list ::= param_declaration (COMMA param_declaration)*
 
 parameter_type_list ::= LP (parameter_list (',' type? ELLIPSIS)?)? RP
 
-func_declaration ::= FUNC_KW failable_type IDENT parameter_type_list attributes?
+func_name ::= TYPE_IDENT DOT IDENT | IDENT
+func_declaration ::= FUNC_KW failable_type func_name parameter_type_list attributes?
 
 func_definition ::=  func_declaration compound_statement?
 

@@ -50,6 +50,7 @@ public interface C3Types {
   IElementType FOR_STATEMENT = new C3ElementType("FOR_STATEMENT");
   IElementType FUNC_DECLARATION = new C3ElementType("FUNC_DECLARATION");
   IElementType FUNC_DEFINITION = new C3ElementType("FUNC_DEFINITION");
+  IElementType FUNC_NAME = new C3ElementType("FUNC_NAME");
   IElementType FUNC_TYPEDEF = new C3ElementType("FUNC_TYPEDEF");
   IElementType GLOBAL_DECLARATION = new C3ElementType("GLOBAL_DECLARATION");
   IElementType GROUPED_EXPRESSION = new C3ElementType("GROUPED_EXPRESSION");
@@ -211,7 +212,6 @@ public interface C3Types {
   IElementType RETURN_KW = new C3TokenType("RETURN_KW");
   IElementType RIGHT_OP = new C3TokenType("RIGHT_OP");
   IElementType RP = new C3TokenType("RP");
-  IElementType SCOPE = new C3TokenType("SCOPE");
   IElementType SHL_ASSIGN = new C3TokenType("SHL_ASSIGN");
   IElementType SHORT_KW = new C3TokenType("SHORT_KW");
   IElementType SHR_ASSIGN = new C3TokenType("SHR_ASSIGN");
@@ -366,6 +366,9 @@ public interface C3Types {
       }
       else if (type == FUNC_DEFINITION) {
         return new C3FuncDefinitionImpl(node);
+      }
+      else if (type == FUNC_NAME) {
+        return new C3FuncNameImpl(node);
       }
       else if (type == FUNC_TYPEDEF) {
         return new C3FuncTypedefImpl(node);
