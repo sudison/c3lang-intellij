@@ -28,20 +28,14 @@ public class C3AssignmentExpressionImpl extends ASTWrapperPsiElement implements 
 
   @Override
   @NotNull
-  public List<C3AssignmentExpression> getAssignmentExpressionList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, C3AssignmentExpression.class);
-  }
-
-  @Override
-  @NotNull
   public List<C3AssignmentOp> getAssignmentOpList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, C3AssignmentOp.class);
   }
 
   @Override
-  @Nullable
-  public C3ErrorExpression getErrorExpression() {
-    return findChildByClass(C3ErrorExpression.class);
+  @NotNull
+  public List<C3ErrorExpression> getErrorExpressionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, C3ErrorExpression.class);
   }
 
   @Override
@@ -51,9 +45,9 @@ public class C3AssignmentExpressionImpl extends ASTWrapperPsiElement implements 
   }
 
   @Override
-  @Nullable
+  @NotNull
   public C3UnaryExpression getUnaryExpression() {
-    return findChildByClass(C3UnaryExpression.class);
+    return findNotNullChildByClass(C3UnaryExpression.class);
   }
 
 }

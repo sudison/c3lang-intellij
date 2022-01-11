@@ -261,10 +261,10 @@ assignment_op ::= EQ
     | XOR_ASSIGN
     | OR_ASSIGN
 
-assignment_expression ::= error_expression
-    | unary_expression ((EQ initializer_list) | (assignment_op assignment_expression))*
+assignment_expression ::=
+    unary_expression ((EQ initializer_list) | (assignment_op error_expression))+
 
-expression ::= TRY_KW expression | assignment_expression (ELSE_KW assignment_expression)?
+expression ::= TRY_KW expression | assignment_expression (ELSE_KW assignment_expression)? | error_expression
 
 enumerator ::= CONST_IDENT (EQ constant_expression)?
 

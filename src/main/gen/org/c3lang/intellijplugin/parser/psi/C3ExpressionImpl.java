@@ -34,6 +34,12 @@ public class C3ExpressionImpl extends ASTWrapperPsiElement implements C3Expressi
 
   @Override
   @Nullable
+  public C3ErrorExpression getErrorExpression() {
+    return findChildByClass(C3ErrorExpression.class);
+  }
+
+  @Override
+  @Nullable
   public C3Expression getExpression() {
     return findChildByClass(C3Expression.class);
   }

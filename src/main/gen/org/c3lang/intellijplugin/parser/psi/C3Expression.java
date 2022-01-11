@@ -11,6 +11,9 @@ public interface C3Expression extends PsiElement {
   List<C3AssignmentExpression> getAssignmentExpressionList();
 
   @Nullable
+  C3ErrorExpression getErrorExpression();
+
+  @Nullable
   C3Expression getExpression();
 
 }

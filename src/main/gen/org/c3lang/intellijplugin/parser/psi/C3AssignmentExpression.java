@@ -8,18 +8,15 @@ import com.intellij.psi.PsiElement;
 public interface C3AssignmentExpression extends PsiElement {
 
   @NotNull
-  List<C3AssignmentExpression> getAssignmentExpressionList();
-
-  @NotNull
   List<C3AssignmentOp> getAssignmentOpList();
 
-  @Nullable
-  C3ErrorExpression getErrorExpression();
+  @NotNull
+  List<C3ErrorExpression> getErrorExpressionList();
 
   @NotNull
   List<C3InitializerList> getInitializerListList();
 
-  @Nullable
+  @NotNull
   C3UnaryExpression getUnaryExpression();
 
 }

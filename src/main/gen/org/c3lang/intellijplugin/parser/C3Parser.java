@@ -118,54 +118,46 @@ public class C3Parser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // error_expression
-  //     | unary_expression ((EQ initializer_list) | (assignment_op assignment_expression))*
+  // unary_expression ((EQ initializer_list) | (assignment_op error_expression))+
   public static boolean assignment_expression(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "assignment_expression")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, ASSIGNMENT_EXPRESSION, "<assignment expression>");
-    r = error_expression(b, l + 1);
-    if (!r) r = assignment_expression_1(b, l + 1);
+    r = unary_expression(b, l + 1);
+    r = r && assignment_expression_1(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // unary_expression ((EQ initializer_list) | (assignment_op assignment_expression))*
+  // ((EQ initializer_list) | (assignment_op error_expression))+
   private static boolean assignment_expression_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "assignment_expression_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = unary_expression(b, l + 1);
-    r = r && assignment_expression_1_1(b, l + 1);
+    r = assignment_expression_1_0(b, l + 1);
+    while (r) {
+      int c = current_position_(b);
+      if (!assignment_expression_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "assignment_expression_1", c)) break;
+    }
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // ((EQ initializer_list) | (assignment_op assignment_expression))*
-  private static boolean assignment_expression_1_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "assignment_expression_1_1")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!assignment_expression_1_1_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "assignment_expression_1_1", c)) break;
-    }
-    return true;
-  }
-
-  // (EQ initializer_list) | (assignment_op assignment_expression)
-  private static boolean assignment_expression_1_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "assignment_expression_1_1_0")) return false;
+  // (EQ initializer_list) | (assignment_op error_expression)
+  private static boolean assignment_expression_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "assignment_expression_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = assignment_expression_1_1_0_0(b, l + 1);
-    if (!r) r = assignment_expression_1_1_0_1(b, l + 1);
+    r = assignment_expression_1_0_0(b, l + 1);
+    if (!r) r = assignment_expression_1_0_1(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // EQ initializer_list
-  private static boolean assignment_expression_1_1_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "assignment_expression_1_1_0_0")) return false;
+  private static boolean assignment_expression_1_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "assignment_expression_1_0_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, EQ);
@@ -174,13 +166,13 @@ public class C3Parser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // assignment_op assignment_expression
-  private static boolean assignment_expression_1_1_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "assignment_expression_1_1_0_1")) return false;
+  // assignment_op error_expression
+  private static boolean assignment_expression_1_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "assignment_expression_1_0_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = assignment_op(b, l + 1);
-    r = r && assignment_expression(b, l + 1);
+    r = r && error_expression(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -1060,13 +1052,14 @@ public class C3Parser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // TRY_KW expression | assignment_expression (ELSE_KW assignment_expression)?
+  // TRY_KW expression | assignment_expression (ELSE_KW assignment_expression)? | error_expression
   public static boolean expression(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "expression")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, EXPRESSION, "<expression>");
     r = expression_0(b, l + 1);
     if (!r) r = expression_1(b, l + 1);
+    if (!r) r = error_expression(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
