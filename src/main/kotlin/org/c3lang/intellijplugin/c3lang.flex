@@ -50,7 +50,7 @@ BINARY_DIGITS   = {BINARY_DIGIT} ("_"* {BINARY_DIGIT})*
 OCTAL_DIGITS    = {OCTAL_DIGIT} ("_"* {OCTAL_DIGIT})*
 HEX_DIGITS      = {HEX_DIGIT} ("_"* {HEX_DIGIT})*
 EndOfLineComment = "//" [^\n]* \n?
-
+STRING_LITERAL = \".*\"
 %%
 
 
@@ -164,6 +164,7 @@ EndOfLineComment = "//" [^\n]* \n?
 
     {WHITESPACE} { return TokenType.WHITE_SPACE; }
     {EndOfLineComment} { return C3ElementType.Companion.getEND_OF_LINE_COMMENTS();}
+    {STRING_LITERAL} {return C3Types.STRING_LITERAL;}
 }
 
 [^]  { return TokenType.BAD_CHARACTER; }
