@@ -1,7 +1,6 @@
 package org.c3lang.intellijplugin.runner
 
 import org.junit.Test
-import org.junit.jupiter.api.Assertions.*
 
 internal class C3CompilerOutputFilterTest {
     @Test

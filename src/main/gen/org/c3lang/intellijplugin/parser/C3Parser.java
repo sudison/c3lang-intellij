@@ -1230,13 +1230,13 @@ public class C3Parser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // FUNC_KW failable_type func_name parameter_type_list attributes?
+  // FN_KW failable_type func_name parameter_type_list attributes?
   public static boolean func_declaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "func_declaration")) return false;
-    if (!nextTokenIs(b, FUNC_KW)) return false;
+    if (!nextTokenIs(b, FN_KW)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, FUNC_KW);
+    r = consumeToken(b, FN_KW);
     r = r && failable_type(b, l + 1);
     r = r && func_name(b, l + 1);
     r = r && parameter_type_list(b, l + 1);
@@ -1256,7 +1256,7 @@ public class C3Parser implements PsiParser, LightPsiParser {
   // func_declaration compound_statement?
   public static boolean func_definition(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "func_definition")) return false;
-    if (!nextTokenIs(b, FUNC_KW)) return false;
+    if (!nextTokenIs(b, FN_KW)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = func_declaration(b, l + 1);
@@ -1286,13 +1286,13 @@ public class C3Parser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // FUNC_KW failable_type parameter_type_list
+  // FN_KW failable_type parameter_type_list
   public static boolean func_typedef(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "func_typedef")) return false;
-    if (!nextTokenIs(b, FUNC_KW)) return false;
+    if (!nextTokenIs(b, FN_KW)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, FUNC_KW);
+    r = consumeToken(b, FN_KW);
     r = r && failable_type(b, l + 1);
     r = r && parameter_type_list(b, l + 1);
     exit_section_(b, m, FUNC_TYPEDEF, r);

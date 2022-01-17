@@ -1,4 +1,5 @@
 import org.jetbrains.changelog.markdownToHTML
+import org.jetbrains.intellij.getIdeJvmArgs
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 fun properties(key: String) = project.findProperty(key).toString()
@@ -26,7 +27,7 @@ repositories {
     mavenCentral()
 }
 dependencies {
-    implementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    testImplementation(kotlin("test"))
 }
 
 // Configure Gradle IntelliJ Plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
@@ -93,6 +94,10 @@ tasks {
                 getOrNull(properties("pluginVersion")) ?: getLatest()
             }.toHTML()
         })
+    }
+
+    test {
+        jvmArgs("--add-opens=java.base/java.io=ALL-UNNAMED", "--add-opens=java.desktop/sun.font=ALL-UNNAMED","--add-opens=java.desktop/javax.swing.plaf.basic=ALL-UNNAMED","--add-opens=java.desktop/javax.swing=ALL-UNNAMED","--add-opens=java.desktop/java.awt=ALL-UNNAMED", "--add-opens=java.desktop/sun.awt=ALL-UNNAMED", "--add-opens=java.desktop/java.awt.event=ALL-UNNAMED")
     }
 
     // Configure UI tests plugin

@@ -70,7 +70,7 @@ STRING_LITERAL = \".*\"
     "enum" { return C3Types.ENUM_KW; }
     "extern" { return C3Types.EXTERN_KW; }
     "for" { return C3Types.FOR_KW; }
-    "fn" { return C3Types.FUNC_KW; }
+    "fn" { return C3Types.FN_KW; }
     "if" { return C3Types.IF_KW; }
     "in" { return C3Types.IN_KW; }
     "import" { return C3Types.IMPORT_KW; }

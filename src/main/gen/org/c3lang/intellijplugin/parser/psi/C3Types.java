@@ -170,8 +170,8 @@ public interface C3Types {
   IElementType FLOAT_KW = new C3TokenType("FLOAT_KW");
   IElementType FN_BLOCK_END = new C3TokenType("FN_BLOCK_END");
   IElementType FN_BLOCK_START = new C3TokenType("FN_BLOCK_START");
+  IElementType FN_KW = new C3TokenType("FN_KW");
   IElementType FOR_KW = new C3TokenType("FOR_KW");
-  IElementType FUNC_KW = new C3TokenType("FUNC_KW");
   IElementType GENERICS_DECLARATION = new C3TokenType("generics_declaration");
   IElementType GE_OP = new C3TokenType("GE_OP");
   IElementType GT_OP = new C3TokenType("GT_OP");
