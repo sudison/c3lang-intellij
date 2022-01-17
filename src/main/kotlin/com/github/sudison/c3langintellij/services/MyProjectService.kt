@@ -1,7 +1,7 @@
 package com.github.sudison.c3langintellij.services
 
-import com.intellij.openapi.project.Project
 import com.github.sudison.c3langintellij.MyBundle
+import com.intellij.openapi.project.Project
 
 class MyProjectService(project: Project) {
 

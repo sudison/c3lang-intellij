@@ -4,10 +4,7 @@ import com.intellij.codeInsight.completion.*
 import com.intellij.codeInsight.lookup.AutoCompletionPolicy
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
-import com.intellij.patterns.PlatformPatterns
 import com.intellij.patterns.PlatformPatterns.psiElement
-import com.intellij.psi.PsiElement
-import com.intellij.psi.PsiErrorElement
 import com.intellij.util.ProcessingContext
 import org.c3lang.intellijplugin.parser.psi.C3File
 import org.c3lang.intellijplugin.parser.psi.C3TokenType
@@ -19,15 +16,20 @@ class C3CompletionProvider(private val les: List<LookupElement>) : CompletionPro
         context: ProcessingContext,
         result: CompletionResultSet
     ) {
-        les.forEach(result::addElement)
+        val p = result.prefixMatcher.prefix
+        les.filter { it.lookupString.startsWith(p) }.forEach(result::addElement)
     }
 }
 
-class C3CompletionContributor: CompletionContributor() {
+class C3CompletionContributor : CompletionContributor() {
     companion object {
         private val topKeyWords = listOf(
             C3Types.FN_KW,
-            C3Types.STRUCT_KW
+            C3Types.STRUCT_KW,
+            C3Types.IMPORT_KW,
+            C3Types.ENUM_KW,
+            C3Types.EXTERN_KW,
+            C3Types.CONST_KW
         ).map {
             val t = it as C3TokenType
             LookupElementBuilder

@@ -2,28 +2,23 @@ package org.c3lang.intellijplugin.completion
 
 import com.intellij.testFramework.fixtures.LightPlatformCodeInsightFixture4TestCase
 import org.c3lang.intellijplugin.C3FileType
-import org.c3lang.intellijplugin.parser.psi.C3TokenType
-import org.c3lang.intellijplugin.parser.psi.C3Types
 import org.junit.Test
 
-class C3CompletionContributorTest: LightPlatformCodeInsightFixture4TestCase() {
-    @Test
-    fun testFn() {
+class C3CompletionContributorTest : LightPlatformCodeInsightFixture4TestCase() {
+
+    private fun topLevelKeywordCompletion(typeStr: String, completion: String) {
         myFixture.configureByText(C3FileType, "")
-        myFixture.type("f")
+        myFixture.type(typeStr)
 
         val l = myFixture.completeBasic()
         assertTrue(l.size == 1)
-        assertEquals(l[0].lookupString, "${(C3Types.FN_KW as C3TokenType).realName()} ")
+        assertEquals(l[0].lookupString, "$completion ")
     }
 
     @Test
-    fun testStruct() {
-        myFixture.configureByText(C3FileType, "")
-        myFixture.type("s")
-
-        val l = myFixture.completeBasic()
-        assertTrue(l.size == 1)
-        assertEquals(l[0].lookupString, "${(C3Types.STRUCT_KW as C3TokenType).realName()} ")
+    fun testFn() {
+        listOf(Pair("f", "fn"), Pair("s", "struct"), Pair("en", "enum"), Pair("ex", "extern"), Pair("c", "const")).forEach {
+            topLevelKeywordCompletion(it.first, it.second)
+        }
     }
 }
