@@ -23,6 +23,14 @@ fun <T : PsiElement, Self : PsiElementPattern<T, Self>> PsiElementPattern<T, Sel
     pattern.accepts(sibling)
 }
 
+fun <T : PsiElement, Self : PsiElementPattern<T, Self>> PsiElementPattern<T, Self>.withPrevSiblingsContainSkipping(
+    skip: ElementPattern<out T>,
+    pattern: ElementPattern<out T>
+): Self = with("withPrevSiblingsContainSkipping") { e ->
+    e.leftSiblings.dropWhile { skip.accepts(it) }.filter { pattern.accepts(it) }
+        .toList().isNotEmpty()
+}
+
 val PsiElement.leftSiblings: Sequence<PsiElement>
     get() = generateSequence(this.prevSibling) { it.prevSibling }
 

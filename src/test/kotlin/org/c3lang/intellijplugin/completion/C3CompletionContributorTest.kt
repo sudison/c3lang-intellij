@@ -39,4 +39,15 @@ class C3CompletionContributorTest : LightPlatformCodeInsightFixture4TestCase() {
             keywordCompletion(it.first, it.second)
         }
     }
+
+    @Test
+    fun testFunParameterType() {
+        listOf(
+            Pair("fn void main(i", "int"),
+            Pair("fn void main(int i, i", "int"),
+            Pair("fn void main(int i, int i, i", "int")
+        ).forEach {
+            keywordCompletion(it.first, it.second)
+        }
+    }
 }

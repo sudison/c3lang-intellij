@@ -38,7 +38,7 @@ class C3CompletionContributor : CompletionContributor() {
                 .withAutoCompletionPolicy(AutoCompletionPolicy.NEVER_AUTOCOMPLETE)
         }
 
-        private val buildInReturnTypes =
+        private val buildInTypes =
             listOf(
                 C3Types.INT_KW, C3Types.BYTE_KW, C3Types.SHORT_KW, C3Types.CHAR_KW,
                 C3Types.USHORT_KW, C3Types.UINT_KW, C3Types.LONG_KW, C3Types.ULONG_KW,
@@ -63,7 +63,19 @@ class C3CompletionContributor : CompletionContributor() {
         extend(
             CompletionType.BASIC,
             psiElement(C3Types.IDENT).withPrevSiblingSkipping(psiElement().whitespace(), psiElement(C3Types.FN_KW)),
-            C3CompletionProvider(buildInReturnTypes)
+            C3CompletionProvider(buildInTypes)
+        )
+        extend(
+            CompletionType.BASIC,
+            psiElement(C3Types.IDENT).withPrevSiblingSkipping(psiElement().whitespace(), psiElement(C3Types.LP))
+                .withPrevSiblingsContainSkipping(psiElement().whitespace(), psiElement(C3Types.FN_KW)),
+            C3CompletionProvider(buildInTypes)
+        )
+        extend(
+            CompletionType.BASIC,
+            psiElement(C3Types.IDENT).withPrevSiblingSkipping(psiElement().whitespace(), psiElement(C3Types.COMMA))
+                .withPrevSiblingsContainSkipping(psiElement().whitespace(), psiElement(C3Types.FN_KW)),
+            C3CompletionProvider(buildInTypes)
         )
     }
 }
