@@ -37,13 +37,33 @@ class C3CompletionContributor : CompletionContributor() {
                 .withPresentableText(t.realName())
                 .withAutoCompletionPolicy(AutoCompletionPolicy.NEVER_AUTOCOMPLETE)
         }
+
+        private val buildInReturnTypes =
+            listOf(
+                C3Types.INT_KW, C3Types.BYTE_KW, C3Types.SHORT_KW, C3Types.CHAR_KW,
+                C3Types.USHORT_KW, C3Types.UINT_KW, C3Types.LONG_KW, C3Types.ULONG_KW,
+                C3Types.HALF_KW, C3Types.FLOAT_KW, C3Types.DOUBLE_KW, C3Types.QUAD_KW,
+                C3Types.VOID_KW
+            )
+                .map {
+                    val t = it as C3TokenType
+                    LookupElementBuilder
+                        .create("${t.realName()} ")
+                        .withPresentableText(t.realName())
+                        .withAutoCompletionPolicy(AutoCompletionPolicy.NEVER_AUTOCOMPLETE)
+                }
     }
 
     init {
         extend(
             CompletionType.BASIC,
-            psiElement(C3Types.IDENT).withParent(C3File::class.java),
+            psiElement(C3Types.IDENT).withParent(C3File::class.java).with(OnStatementBeginning()),
             C3CompletionProvider(topKeyWords)
+        )
+        extend(
+            CompletionType.BASIC,
+            psiElement(C3Types.IDENT).withPrevSiblingSkipping(psiElement().whitespace(), psiElement(C3Types.FN_KW)),
+            C3CompletionProvider(buildInReturnTypes)
         )
     }
 }
