@@ -119,10 +119,14 @@ base_type ::= VOID_KW
     | BOOL_KW
     | integer_type
     | float_type
+    | Symbol
     | TYPE_IDENT
     | path TYPE_IDENT
     | CT_TYPE_IDENT
 
+Symbol ::= IDENT {
+    mixin='org.c3lang.intellijplugin.reference.SymbolMixin'
+}
 
 type_suffix ::= STAR | LB (constant_expression | ADD_OP)? RB
 

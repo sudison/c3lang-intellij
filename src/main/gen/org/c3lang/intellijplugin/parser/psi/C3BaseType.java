@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface C3BaseType extends PsiElement {
 
   @Nullable
+  C3Symbol getSymbol();
+
+  @Nullable
   C3FloatType getFloatType();
 
   @Nullable

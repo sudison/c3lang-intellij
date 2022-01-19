@@ -28,6 +28,12 @@ public class C3BaseTypeImpl extends ASTWrapperPsiElement implements C3BaseType {
 
   @Override
   @Nullable
+  public C3Symbol getSymbol() {
+    return findChildByClass(C3Symbol.class);
+  }
+
+  @Override
+  @Nullable
   public C3FloatType getFloatType() {
     return findChildByClass(C3FloatType.class);
   }

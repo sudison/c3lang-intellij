@@ -7,6 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public class C3Visitor extends PsiElementVisitor {
 
+  public void visitSymbol(@NotNull C3Symbol o) {
+    visitPsiElement(o);
+  }
+
   public void visitAdditiveExpression(@NotNull C3AdditiveExpression o) {
     visitPsiElement(o);
   }

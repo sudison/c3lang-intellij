@@ -36,6 +36,18 @@ public class C3Parser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // IDENT
+  public static boolean Symbol(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Symbol")) return false;
+    if (!nextTokenIs(b, IDENT)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IDENT);
+    exit_section_(b, m, SYMBOL, r);
+    return r;
+  }
+
+  /* ********************************************************** */
   // bit_expression (additive_op bit_expression)*
   public static boolean additive_expression(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "additive_expression")) return false;
@@ -217,6 +229,7 @@ public class C3Parser implements PsiParser, LightPsiParser {
   //     | BOOL_KW
   //     | integer_type
   //     | float_type
+  //     | Symbol
   //     | TYPE_IDENT
   //     | path TYPE_IDENT
   //     | CT_TYPE_IDENT
@@ -228,16 +241,17 @@ public class C3Parser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, BOOL_KW);
     if (!r) r = integer_type(b, l + 1);
     if (!r) r = float_type(b, l + 1);
+    if (!r) r = Symbol(b, l + 1);
     if (!r) r = consumeToken(b, TYPE_IDENT);
-    if (!r) r = base_type_5(b, l + 1);
+    if (!r) r = base_type_6(b, l + 1);
     if (!r) r = consumeToken(b, CT_TYPE_IDENT);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
   // path TYPE_IDENT
-  private static boolean base_type_5(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "base_type_5")) return false;
+  private static boolean base_type_6(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "base_type_6")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = path(b, l + 1);

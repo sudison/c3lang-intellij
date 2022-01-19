@@ -6,8 +6,10 @@ import com.intellij.patterns.PatternCondition
 import com.intellij.patterns.PsiElementPattern
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiWhiteSpace
+import com.intellij.psi.util.elementType
 import com.intellij.psi.util.prevLeafs
 import com.intellij.util.ProcessingContext
+import org.c3lang.intellijplugin.parser.psi.C3Types
 
 fun <T, Self : ObjectPattern<T, Self>> ObjectPattern<T, Self>.with(name: String, cond: (T) -> Boolean): Self =
     with(object : PatternCondition<T>(name) {
@@ -38,6 +40,6 @@ val PsiElement.leftSiblings: Sequence<PsiElement>
 class OnStatementBeginning() : PatternCondition<PsiElement>("on statement beginning") {
     override fun accepts(t: PsiElement, context: ProcessingContext?): Boolean {
         val prev = t.prevLeafs.filter { it !is PsiWhiteSpace }.firstOrNull()
-        return prev == null
+        return prev == null || prev.elementType == C3Types.EOS
     }
 }

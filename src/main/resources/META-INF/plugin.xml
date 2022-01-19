@@ -7,17 +7,20 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-         <fileType name="C3" implementationClass="org.c3lang.intellijplugin.C3FileType"
-                   fieldName="INSTANCE" language="C3" extensions="c3"/>
-         <lang.parserDefinition language="C3"
-                                implementationClass="org.c3lang.intellijplugin.C3ParserDefinition"/>
-         <lang.syntaxHighlighterFactory
-                 language="C3"
-                 implementationClass="org.c3lang.intellijplugin.C3SyntaxHighlighterFactory"/>
+        <fileType name="C3" implementationClass="org.c3lang.intellijplugin.C3FileType"
+                  fieldName="INSTANCE" language="C3" extensions="c3"/>
+        <lang.parserDefinition language="C3"
+                               implementationClass="org.c3lang.intellijplugin.C3ParserDefinition"/>
+        <lang.syntaxHighlighterFactory
+                language="C3"
+                implementationClass="org.c3lang.intellijplugin.C3SyntaxHighlighterFactory"/>
         <programRunner implementation="org.c3lang.intellijplugin.runner.C3Runner"/>
         <configurationType implementation="org.c3lang.intellijplugin.runner.C3RunnerConfigType"/>
         <completion.contributor language="C3"
                                 implementationClass="org.c3lang.intellijplugin.completion.C3CompletionContributor"/>
+        <psi.referenceContributor language="C3"
+                                  implementation="org.c3lang.intellijplugin.reference.C3ReferenceContributor"/>
+
         <applicationService serviceImplementation="com.github.sudison.c3langintellij.services.MyApplicationService"/>
         <projectService serviceImplementation="com.github.sudison.c3langintellij.services.MyProjectService"/>
     </extensions>

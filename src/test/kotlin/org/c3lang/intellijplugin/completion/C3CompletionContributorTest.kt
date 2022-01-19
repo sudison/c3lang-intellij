@@ -9,7 +9,6 @@ class C3CompletionContributorTest : LightPlatformCodeInsightFixture4TestCase() {
     private fun keywordCompletion(typeStr: String, completion: String) {
         myFixture.configureByText(C3FileType, "")
         myFixture.type(typeStr)
-
         val l = myFixture.completeBasic()
         assertTrue(l.size == 1)
         assertEquals(l[0].lookupString, "$completion ")
@@ -46,6 +45,15 @@ class C3CompletionContributorTest : LightPlatformCodeInsightFixture4TestCase() {
             Pair("fn void main(i", "int"),
             Pair("fn void main(int i, i", "int"),
             Pair("fn void main(int i, int i, i", "int")
+        ).forEach {
+            keywordCompletion(it.first, it.second)
+        }
+    }
+
+    @Test
+    fun testStatementType() {
+        listOf(
+            Pair("fn <caret>void main(i", "int")
         ).forEach {
             keywordCompletion(it.first, it.second)
         }

@@ -867,7 +867,7 @@ class C3Lexer implements FlexLexer {
             // fall through
           case 127: break;
           case 30: 
-            { return C3Types.FUNC_KW;
+            { return C3Types.FN_KW;
             } 
             // fall through
           case 128: break;
