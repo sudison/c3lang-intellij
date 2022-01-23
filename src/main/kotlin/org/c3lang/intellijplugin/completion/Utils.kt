@@ -40,6 +40,6 @@ val PsiElement.leftSiblings: Sequence<PsiElement>
 class OnStatementBeginning() : PatternCondition<PsiElement>("on statement beginning") {
     override fun accepts(t: PsiElement, context: ProcessingContext?): Boolean {
         val prev = t.prevLeafs.filter { it !is PsiWhiteSpace }.firstOrNull()
-        return prev == null || prev.elementType == C3Types.EOS
+        return prev == null || prev.elementType == C3Types.EOS || prev.elementType == C3Types.RBR
     }
 }
