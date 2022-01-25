@@ -4,6 +4,7 @@ package org.c3lang.intellijplugin.parser.psi;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiNameIdentifierOwner;
 
 public class C3Visitor extends PsiElementVisitor {
 
@@ -176,7 +177,7 @@ public class C3Visitor extends PsiElementVisitor {
   }
 
   public void visitFuncDeclaration(@NotNull C3FuncDeclaration o) {
-    visitPsiElement(o);
+    visitPsiNameIdentifierOwner(o);
   }
 
   public void visitFuncDefinition(@NotNull C3FuncDefinition o) {
@@ -348,7 +349,7 @@ public class C3Visitor extends PsiElementVisitor {
   }
 
   public void visitStructDeclaration(@NotNull C3StructDeclaration o) {
-    visitPsiElement(o);
+    visitPsiNameIdentifierOwner(o);
   }
 
   public void visitStructDeclarationList(@NotNull C3StructDeclarationList o) {
@@ -421,6 +422,10 @@ public class C3Visitor extends PsiElementVisitor {
 
   public void visitVisibility(@NotNull C3Visibility o) {
     visitPsiElement(o);
+  }
+
+  public void visitPsiNameIdentifierOwner(@NotNull PsiNameIdentifierOwner o) {
+    visitElement(o);
   }
 
   public void visitPsiElement(@NotNull PsiElement o) {

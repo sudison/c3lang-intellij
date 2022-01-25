@@ -36,14 +36,15 @@ public class C3Parser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IDENT
+  // IDENT | TYPE_IDENT
   public static boolean Symbol(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Symbol")) return false;
-    if (!nextTokenIs(b, IDENT)) return false;
+    if (!nextTokenIs(b, "<symbol>", IDENT, TYPE_IDENT)) return false;
     boolean r;
-    Marker m = enter_section_(b);
+    Marker m = enter_section_(b, l, _NONE_, SYMBOL, "<symbol>");
     r = consumeToken(b, IDENT);
-    exit_section_(b, m, SYMBOL, r);
+    if (!r) r = consumeToken(b, TYPE_IDENT);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 

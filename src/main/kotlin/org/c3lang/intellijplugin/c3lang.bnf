@@ -70,7 +70,10 @@ type_list ::= type (COMMA type)*
 macro_declaration ::= MACRO_KW type? IDENT LP macro_argument_list? RP compound_statement
 
 struct_or_union ::= STRUCT_KW | UNION_KW
-struct_declaration ::= struct_or_union TYPE_IDENT attributes? struct_body
+struct_declaration ::= struct_or_union TYPE_IDENT attributes? struct_body {
+    implements=['com.intellij.psi.PsiNameIdentifierOwner']
+    mixin='org.c3lang.intellijplugin.reference.C3StructMixin'
+}
 
 func_typedef ::= FN_KW failable_type parameter_type_list
 
@@ -124,7 +127,7 @@ base_type ::= VOID_KW
     | path TYPE_IDENT
     | CT_TYPE_IDENT
 
-Symbol ::= IDENT {
+Symbol ::= IDENT | TYPE_IDENT {
     mixin='org.c3lang.intellijplugin.reference.SymbolMixin'
 }
 
@@ -300,6 +303,8 @@ pin=1
 func_name ::= TYPE_IDENT DOT IDENT | IDENT
 func_declaration ::= FN_KW failable_type func_name parameter_type_list attributes? {
     pin=1
+    implements=['com.intellij.psi.PsiNameIdentifierOwner']
+    mixin='org.c3lang.intellijplugin.reference.C3FnMixin'
 }
 
 func_definition ::=  func_declaration compound_statement? {

@@ -8,12 +8,16 @@ import org.c3lang.intellijplugin.parser.psi.C3IdentExpression
 
 abstract class SymbolMixin(node: ASTNode) : ASTWrapperPsiElement(node) {
     override fun getReference(): PsiReference? {
-        return if (parent is C3BaseType) {
-            C3TypeReference(this, node.firstChildNode?.psi!!)
-        } else if (parent is C3IdentExpression) {
-            C3TypeReference(this, node.firstChildNode?.psi!!)
-        } else {
-            null
+        return when (parent) {
+            is C3BaseType -> {
+                C3TypeReference(this, node.firstChildNode?.psi!!)
+            }
+            is C3IdentExpression -> {
+                C3TypeReference(this, node.firstChildNode?.psi!!)
+            }
+            else -> {
+                null
+            }
         }
     }
 }

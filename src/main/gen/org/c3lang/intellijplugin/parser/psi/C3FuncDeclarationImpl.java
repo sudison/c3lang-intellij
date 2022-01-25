@@ -8,9 +8,9 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static org.c3lang.intellijplugin.parser.psi.C3Types.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import org.c3lang.intellijplugin.reference.C3FnMixin;
 
-public class C3FuncDeclarationImpl extends ASTWrapperPsiElement implements C3FuncDeclaration {
+public class C3FuncDeclarationImpl extends C3FnMixin implements C3FuncDeclaration {
 
   public C3FuncDeclarationImpl(@NotNull ASTNode node) {
     super(node);

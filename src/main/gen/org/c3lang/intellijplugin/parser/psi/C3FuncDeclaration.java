@@ -4,8 +4,9 @@ package org.c3lang.intellijplugin.parser.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiNameIdentifierOwner;
 
-public interface C3FuncDeclaration extends PsiElement {
+public interface C3FuncDeclaration extends PsiNameIdentifierOwner {
 
   @Nullable
   C3FailableType getFailableType();
