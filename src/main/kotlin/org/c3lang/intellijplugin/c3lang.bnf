@@ -88,7 +88,7 @@ enum_declaration ::= ENUM_KW TYPE_IDENT (COLON type)? attributes? LBR enumerator
 
 global_declaration ::= type IDENT (EQ initializer)? EOS
 
-ident_expression ::= CONST_IDENT | IDENT | CT_IDENT | CT_CONST_IDENT
+ident_expression ::= CONST_IDENT | Symbol | CT_IDENT | CT_CONST_IDENT
 
 constant ::= INT_LITERAL
 
@@ -165,6 +165,7 @@ statement ::= compound_statement
     | try_statement
     | defer_statement
     | ct_stmt
+    | EOS
 
 defer_catch_body ::= compound_statement
     | expression_statement
@@ -201,11 +202,15 @@ try_statement ::= TRY_KW (selection_statement | iteration_statement | jump_state
 
 labelled_statement ::= CASE_KW constant_expression (DOTDOT constant_expression)? COLON | DEFAULT_KW COLON
 
-compound_statement ::= LBR statement_list? RBR
+compound_statement ::= LBR statement_list? RBR {
+    pin=1
+}
 
 statement_list ::= statement+
 
-expression_statement ::= expression? EOS
+expression_statement ::= expression EOS {
+pin=1
+}
 
 argument_expression_list ::= expression (COMMA expression)*
 
@@ -282,16 +287,24 @@ macro_argument_list ::= macro_argument (',' macro_argument)*
 
 declaration ::= failable_type IDENT (EQ initializer)?
 
-param_declaration ::= type (IDENT (EQ initializer)?)?
+param_declaration ::= type (IDENT (EQ initializer)?)? {
+pin=1
+}
 
 parameter_list ::= param_declaration (COMMA param_declaration)*
 
-parameter_type_list ::= LP (parameter_list (',' type? ELLIPSIS)?)? RP
+parameter_type_list ::= LP (parameter_list (',' type? ELLIPSIS)?)? RP {
+pin=1
+}
 
 func_name ::= TYPE_IDENT DOT IDENT | IDENT
-func_declaration ::= FN_KW failable_type func_name parameter_type_list attributes?
+func_declaration ::= FN_KW failable_type func_name parameter_type_list attributes? {
+    pin=1
+}
 
-func_definition ::=  func_declaration compound_statement?
+func_definition ::=  func_declaration compound_statement? {
+pin=1
+}
 
 external_func_declaration ::= EXTERN_KW func_declaration EOS
 

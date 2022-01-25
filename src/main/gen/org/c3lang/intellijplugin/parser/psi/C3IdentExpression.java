@@ -7,4 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface C3IdentExpression extends PsiElement {
 
+  @Nullable
+  C3Symbol getSymbol();
+
 }

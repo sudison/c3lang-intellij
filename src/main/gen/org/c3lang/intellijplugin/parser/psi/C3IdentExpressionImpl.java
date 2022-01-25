@@ -26,4 +26,10 @@ public class C3IdentExpressionImpl extends ASTWrapperPsiElement implements C3Ide
     else super.accept(visitor);
   }
 
+  @Override
+  @Nullable
+  public C3Symbol getSymbol() {
+    return findChildByClass(C3Symbol.class);
+  }
+
 }

@@ -327,13 +327,14 @@ public class C3Parser implements PsiParser, LightPsiParser {
   public static boolean compound_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "compound_statement")) return false;
     if (!nextTokenIs(b, LBR)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, COMPOUND_STATEMENT, null);
     r = consumeToken(b, LBR);
-    r = r && compound_statement_1(b, l + 1);
-    r = r && consumeToken(b, RBR);
-    exit_section_(b, m, COMPOUND_STATEMENT, r);
-    return r;
+    p = r; // pin = 1
+    r = r && report_error_(b, compound_statement_1(b, l + 1));
+    r = p && consumeToken(b, RBR) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // statement_list?
@@ -1153,22 +1154,16 @@ public class C3Parser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // expression? EOS
+  // expression EOS
   public static boolean expression_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "expression_statement")) return false;
-    boolean r;
+    boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, EXPRESSION_STATEMENT, "<expression statement>");
-    r = expression_statement_0(b, l + 1);
+    r = expression(b, l + 1);
+    p = r; // pin = 1
     r = r && consumeToken(b, EOS);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // expression?
-  private static boolean expression_statement_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "expression_statement_0")) return false;
-    expression(b, l + 1);
-    return true;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   /* ********************************************************** */
@@ -1248,15 +1243,16 @@ public class C3Parser implements PsiParser, LightPsiParser {
   public static boolean func_declaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "func_declaration")) return false;
     if (!nextTokenIs(b, FN_KW)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, FUNC_DECLARATION, null);
     r = consumeToken(b, FN_KW);
-    r = r && failable_type(b, l + 1);
-    r = r && func_name(b, l + 1);
-    r = r && parameter_type_list(b, l + 1);
-    r = r && func_declaration_4(b, l + 1);
-    exit_section_(b, m, FUNC_DECLARATION, r);
-    return r;
+    p = r; // pin = 1
+    r = r && report_error_(b, failable_type(b, l + 1));
+    r = p && report_error_(b, func_name(b, l + 1)) && r;
+    r = p && report_error_(b, parameter_type_list(b, l + 1)) && r;
+    r = p && func_declaration_4(b, l + 1) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // attributes?
@@ -1271,12 +1267,13 @@ public class C3Parser implements PsiParser, LightPsiParser {
   public static boolean func_definition(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "func_definition")) return false;
     if (!nextTokenIs(b, FN_KW)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, FUNC_DEFINITION, null);
     r = func_declaration(b, l + 1);
+    p = r; // pin = 1
     r = r && func_definition_1(b, l + 1);
-    exit_section_(b, m, FUNC_DEFINITION, r);
-    return r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // compound_statement?
@@ -1360,13 +1357,13 @@ public class C3Parser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // CONST_IDENT | IDENT | CT_IDENT | CT_CONST_IDENT
+  // CONST_IDENT | Symbol | CT_IDENT | CT_CONST_IDENT
   public static boolean ident_expression(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ident_expression")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, IDENT_EXPRESSION, "<ident expression>");
     r = consumeToken(b, CONST_IDENT);
-    if (!r) r = consumeToken(b, IDENT);
+    if (!r) r = Symbol(b, l + 1);
     if (!r) r = consumeToken(b, CT_IDENT);
     if (!r) r = consumeToken(b, CT_CONST_IDENT);
     exit_section_(b, l, m, r, false, null);
@@ -2010,12 +2007,13 @@ public class C3Parser implements PsiParser, LightPsiParser {
   // type (IDENT (EQ initializer)?)?
   public static boolean param_declaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "param_declaration")) return false;
-    boolean r;
+    boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, PARAM_DECLARATION, "<param declaration>");
     r = type(b, l + 1);
+    p = r; // pin = 1
     r = r && param_declaration_1(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // (IDENT (EQ initializer)?)?
@@ -2093,13 +2091,14 @@ public class C3Parser implements PsiParser, LightPsiParser {
   public static boolean parameter_type_list(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "parameter_type_list")) return false;
     if (!nextTokenIs(b, LP)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, PARAMETER_TYPE_LIST, null);
     r = consumeToken(b, LP);
-    r = r && parameter_type_list_1(b, l + 1);
-    r = r && consumeToken(b, RP);
-    exit_section_(b, m, PARAMETER_TYPE_LIST, r);
-    return r;
+    p = r; // pin = 1
+    r = r && report_error_(b, parameter_type_list_1(b, l + 1));
+    r = p && consumeToken(b, RP) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // (parameter_list (',' type? ELLIPSIS)?)?
@@ -2704,6 +2703,7 @@ public class C3Parser implements PsiParser, LightPsiParser {
   //     | try_statement
   //     | defer_statement
   //     | ct_stmt
+  //     | EOS
   public static boolean statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "statement")) return false;
     boolean r;
@@ -2719,6 +2719,7 @@ public class C3Parser implements PsiParser, LightPsiParser {
     if (!r) r = try_statement(b, l + 1);
     if (!r) r = defer_statement(b, l + 1);
     if (!r) r = ct_stmt(b, l + 1);
+    if (!r) r = consumeToken(b, EOS);
     exit_section_(b, l, m, r, false, null);
     return r;
   }

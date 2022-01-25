@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface C3ExpressionStatement extends PsiElement {
 
-  @Nullable
+  @NotNull
   C3Expression getExpression();
 
 }

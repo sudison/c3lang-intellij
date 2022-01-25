@@ -27,9 +27,9 @@ public class C3ExpressionStatementImpl extends ASTWrapperPsiElement implements C
   }
 
   @Override
-  @Nullable
+  @NotNull
   public C3Expression getExpression() {
-    return findChildByClass(C3Expression.class);
+    return findNotNullChildByClass(C3Expression.class);
   }
 
 }

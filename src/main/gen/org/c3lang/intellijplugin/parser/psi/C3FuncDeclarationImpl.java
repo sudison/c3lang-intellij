@@ -27,21 +27,21 @@ public class C3FuncDeclarationImpl extends ASTWrapperPsiElement implements C3Fun
   }
 
   @Override
-  @NotNull
+  @Nullable
   public C3FailableType getFailableType() {
-    return findNotNullChildByClass(C3FailableType.class);
+    return findChildByClass(C3FailableType.class);
   }
 
   @Override
-  @NotNull
+  @Nullable
   public C3FuncName getFuncName() {
-    return findNotNullChildByClass(C3FuncName.class);
+    return findChildByClass(C3FuncName.class);
   }
 
   @Override
-  @NotNull
+  @Nullable
   public C3ParameterTypeList getParameterTypeList() {
-    return findNotNullChildByClass(C3ParameterTypeList.class);
+    return findChildByClass(C3ParameterTypeList.class);
   }
 
 }

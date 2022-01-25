@@ -7,13 +7,13 @@ import com.intellij.psi.PsiElement;
 
 public interface C3FuncDeclaration extends PsiElement {
 
-  @NotNull
+  @Nullable
   C3FailableType getFailableType();
 
-  @NotNull
+  @Nullable
   C3FuncName getFuncName();
 
-  @NotNull
+  @Nullable
   C3ParameterTypeList getParameterTypeList();
 
 }
