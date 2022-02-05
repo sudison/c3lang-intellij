@@ -30,12 +30,11 @@ ALPHANUM        = {LETTER} | {DIGIT}
 ALPHANUM_US     = {ALPHANUM} | "_"
 UC_ALPHANUM_US  = {UC_LETTER_US} | {DIGIT}
 
-IDENTIFIER      = "_"* {LC_LETTER} {ALPHANUM_US}*
+IDENTIFIER      = "_"* {LETTER} {ALPHANUM_US}*
 CONST_IDENT     = "_"* {UC_LETTER} {UC_ALPHANUM_US}*
-TYPE_IDENT      = "_"* {UC_LETTER} "_"* {LC_LETTER} {ALPHANUM_US}*
 CT_IDENT        = "$" {IDENTIFIER}
 CT_CONST_IDENT  = "$" {CONST_IDENT}
-CT_TYPE_IDENT   = "$" {TYPE_IDENT}
+CT_TYPE_IDENT   = "$" {IDENTIFIER}
 EOL             = "\n"
 WHITESPACE      = [ \t\v\f] | {EOL}
 
@@ -154,13 +153,12 @@ STRING_LITERAL = \".*\"
 
     {INTEGER} { return C3Types.INT_LITERAL; }
 
-    {CONST_IDENT}  { return C3Types.CONST_IDENT; }
     {CT_CONST_IDENT} { return C3Types.CT_CONST_IDENT; }
 
-    {TYPE_IDENT}  { return C3Types.TYPE_IDENT; }
     {CT_TYPE_IDENT} { return C3Types.CT_TYPE_IDENT; }
 
     {IDENTIFIER} { return C3Types.IDENT; }
+
     {CT_IDENT} { return C3Types.CT_IDENT; }
 
     {WHITESPACE} { return TokenType.WHITE_SPACE; }
