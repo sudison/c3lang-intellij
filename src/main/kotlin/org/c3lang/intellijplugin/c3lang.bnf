@@ -91,7 +91,7 @@ enum_declaration ::= ENUM_KW TYPE_IDENT (COLON type)? attributes? LBR enumerator
 
 global_declaration ::= type IDENT (EQ initializer)? EOS
 
-ident_expression ::= CONST_IDENT | Symbol | CT_IDENT | CT_CONST_IDENT
+ident_expression ::= CONST_IDENT | IDENT | CT_IDENT | CT_CONST_IDENT
 
 constant ::= INT_LITERAL
 

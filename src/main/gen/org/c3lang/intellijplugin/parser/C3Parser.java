@@ -1358,13 +1358,13 @@ public class C3Parser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // CONST_IDENT | Symbol | CT_IDENT | CT_CONST_IDENT
+  // CONST_IDENT | IDENT | CT_IDENT | CT_CONST_IDENT
   public static boolean ident_expression(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ident_expression")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, IDENT_EXPRESSION, "<ident expression>");
     r = consumeToken(b, CONST_IDENT);
-    if (!r) r = Symbol(b, l + 1);
+    if (!r) r = consumeToken(b, IDENT);
     if (!r) r = consumeToken(b, CT_IDENT);
     if (!r) r = consumeToken(b, CT_CONST_IDENT);
     exit_section_(b, l, m, r, false, null);
