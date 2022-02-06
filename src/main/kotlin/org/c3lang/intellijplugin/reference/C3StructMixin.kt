@@ -8,7 +8,7 @@ import org.c3lang.intellijplugin.parser.psi.C3Types
 
 abstract class C3StructMixin(node: ASTNode) : ASTWrapperPsiElement(node), PsiNameIdentifierOwner {
     override fun getNameIdentifier(): PsiElement? {
-        val childNode = node.findChildByType(C3Types.IDENT)
+        val childNode = node.findChildByType(C3Types.TYPE_IDENT)
         return childNode?.psi
     }
 

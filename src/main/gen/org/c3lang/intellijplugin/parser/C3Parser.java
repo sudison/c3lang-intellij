@@ -36,14 +36,15 @@ public class C3Parser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IDENT
+  // IDENT | TYPE_IDENT
   public static boolean Symbol(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Symbol")) return false;
-    if (!nextTokenIs(b, IDENT)) return false;
+    if (!nextTokenIs(b, "<symbol>", IDENT, TYPE_IDENT)) return false;
     boolean r;
-    Marker m = enter_section_(b);
+    Marker m = enter_section_(b, l, _NONE_, SYMBOL, "<symbol>");
     r = consumeToken(b, IDENT);
-    exit_section_(b, m, SYMBOL, r);
+    if (!r) r = consumeToken(b, TYPE_IDENT);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
@@ -2755,14 +2756,14 @@ public class C3Parser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // struct_or_union IDENT attributes? struct_body
+  // struct_or_union TYPE_IDENT attributes? struct_body
   public static boolean struct_declaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "struct_declaration")) return false;
     if (!nextTokenIs(b, "<struct declaration>", STRUCT_KW, UNION_KW)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, STRUCT_DECLARATION, "<struct declaration>");
     r = struct_or_union(b, l + 1);
-    r = r && consumeToken(b, IDENT);
+    r = r && consumeToken(b, TYPE_IDENT);
     r = r && struct_declaration_2(b, l + 1);
     r = r && struct_body(b, l + 1);
     exit_section_(b, l, m, r, false, null);
