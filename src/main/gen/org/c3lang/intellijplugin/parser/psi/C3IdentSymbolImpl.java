@@ -8,28 +8,22 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static org.c3lang.intellijplugin.parser.psi.C3Types.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import org.c3lang.intellijplugin.reference.SymbolMixin;
 
-public class C3IdentExpressionImpl extends ASTWrapperPsiElement implements C3IdentExpression {
+public class C3IdentSymbolImpl extends SymbolMixin implements C3IdentSymbol {
 
-  public C3IdentExpressionImpl(@NotNull ASTNode node) {
+  public C3IdentSymbolImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull C3Visitor visitor) {
-    visitor.visitIdentExpression(this);
+    visitor.visitIdentSymbol(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof C3Visitor) accept((C3Visitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public C3IdentSymbol getIdentSymbol() {
-    return findChildByClass(C3IdentSymbol.class);
   }
 
 }

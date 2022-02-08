@@ -56,6 +56,7 @@ public interface C3Types {
   IElementType GROUPED_EXPRESSION = new C3ElementType("GROUPED_EXPRESSION");
   IElementType IDENTIFIER_LIST = new C3ElementType("IDENTIFIER_LIST");
   IElementType IDENT_EXPRESSION = new C3ElementType("IDENT_EXPRESSION");
+  IElementType IDENT_SYMBOL = new C3ElementType("IDENT_SYMBOL");
   IElementType IMPORT_DECL = new C3ElementType("IMPORT_DECL");
   IElementType IMPORT_PATH = new C3ElementType("IMPORT_PATH");
   IElementType INITIALIZER = new C3ElementType("INITIALIZER");
@@ -385,6 +386,9 @@ public interface C3Types {
       }
       else if (type == IDENT_EXPRESSION) {
         return new C3IdentExpressionImpl(node);
+      }
+      else if (type == IDENT_SYMBOL) {
+        return new C3IdentSymbolImpl(node);
       }
       else if (type == IMPORT_DECL) {
         return new C3ImportDeclImpl(node);

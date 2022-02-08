@@ -816,13 +816,14 @@ public class C3Parser implements PsiParser, LightPsiParser {
   // failable_type IDENT (EQ initializer)?
   public static boolean declaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "declaration")) return false;
-    boolean r;
+    boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, DECLARATION, "<declaration>");
     r = failable_type(b, l + 1);
-    r = r && consumeToken(b, IDENT);
-    r = r && declaration_2(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
+    p = r; // pin = 1
+    r = r && report_error_(b, consumeToken(b, IDENT));
+    r = p && declaration_2(b, l + 1) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // (EQ initializer)?
@@ -847,12 +848,13 @@ public class C3Parser implements PsiParser, LightPsiParser {
   // declaration EOS
   public static boolean declaration_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "declaration_statement")) return false;
-    boolean r;
+    boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, DECLARATION_STATEMENT, "<declaration statement>");
     r = declaration(b, l + 1);
+    p = r; // pin = 1
     r = r && consumeToken(b, EOS);
-    exit_section_(b, l, m, r, false, null);
-    return r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   /* ********************************************************** */
@@ -1358,16 +1360,28 @@ public class C3Parser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // CONST_IDENT | IDENT | CT_IDENT | CT_CONST_IDENT
+  // CONST_IDENT | ident_symbol | CT_IDENT | CT_CONST_IDENT
   public static boolean ident_expression(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ident_expression")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, IDENT_EXPRESSION, "<ident expression>");
     r = consumeToken(b, CONST_IDENT);
-    if (!r) r = consumeToken(b, IDENT);
+    if (!r) r = ident_symbol(b, l + 1);
     if (!r) r = consumeToken(b, CT_IDENT);
     if (!r) r = consumeToken(b, CT_CONST_IDENT);
     exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // IDENT
+  public static boolean ident_symbol(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ident_symbol")) return false;
+    if (!nextTokenIs(b, IDENT)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IDENT);
+    exit_section_(b, m, IDENT_SYMBOL, r);
     return r;
   }
 

@@ -5,9 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface C3IdentExpression extends PsiElement {
-
-  @Nullable
-  C3IdentSymbol getIdentSymbol();
+public interface C3IdentSymbol extends PsiElement {
 
 }

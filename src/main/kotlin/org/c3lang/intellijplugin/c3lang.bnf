@@ -91,7 +91,7 @@ enum_declaration ::= ENUM_KW TYPE_IDENT (COLON type)? attributes? LBR enumerator
 
 global_declaration ::= type IDENT (EQ initializer)? EOS
 
-ident_expression ::= CONST_IDENT | IDENT | CT_IDENT | CT_CONST_IDENT
+ident_expression ::= CONST_IDENT | ident_symbol | CT_IDENT | CT_CONST_IDENT
 
 constant ::= INT_LITERAL
 
@@ -129,6 +129,11 @@ base_type ::= VOID_KW
 
 Symbol ::= IDENT | TYPE_IDENT {
     mixin='org.c3lang.intellijplugin.reference.SymbolMixin'
+}
+
+ident_symbol ::= IDENT {
+    mixin='org.c3lang.intellijplugin.reference.SymbolMixin'
+
 }
 
 type_suffix ::= STAR | LB (constant_expression | ADD_OP)? RB
@@ -181,7 +186,9 @@ selection_statement ::= SWITCH_KW LP decl_expr_list RP compound_statement
     | IF_KW LP decl_expr_list RP compound_statement (ELSE_KW compound_statement)?
 
 
-declaration_statement ::= declaration EOS
+declaration_statement ::= declaration EOS {
+pin=1
+}
 
 expression_list ::= expression (COMMA expression)*
 
@@ -288,7 +295,9 @@ macro_argument ::= type? (CT_IDENT | IDENT)
 
 macro_argument_list ::= macro_argument (',' macro_argument)*
 
-declaration ::= failable_type IDENT (EQ initializer)?
+declaration ::= failable_type IDENT (EQ initializer)? {
+pin=1
+}
 
 param_declaration ::= type (IDENT (EQ initializer)?)? {
 pin=1

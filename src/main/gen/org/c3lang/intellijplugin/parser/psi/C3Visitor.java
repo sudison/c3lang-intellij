@@ -204,6 +204,10 @@ public class C3Visitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitIdentSymbol(@NotNull C3IdentSymbol o) {
+    visitPsiElement(o);
+  }
+
   public void visitIdentifierList(@NotNull C3IdentifierList o) {
     visitPsiElement(o);
   }
