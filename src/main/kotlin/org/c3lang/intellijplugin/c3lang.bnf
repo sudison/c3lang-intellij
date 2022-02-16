@@ -297,6 +297,8 @@ macro_argument_list ::= macro_argument (',' macro_argument)*
 
 declaration ::= failable_type IDENT (EQ initializer)? {
 pin=1
+implements=['com.intellij.psi.PsiNameIdentifierOwner']
+mixin='org.c3lang.intellijplugin.parser.psi.Declaration'
 }
 
 param_declaration ::= type (IDENT (EQ initializer)?)? {

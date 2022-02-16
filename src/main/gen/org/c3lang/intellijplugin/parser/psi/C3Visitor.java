@@ -113,7 +113,7 @@ public class C3Visitor extends PsiElementVisitor {
   }
 
   public void visitDeclaration(@NotNull C3Declaration o) {
-    visitPsiElement(o);
+    visitPsiNameIdentifierOwner(o);
   }
 
   public void visitDeclarationStatement(@NotNull C3DeclarationStatement o) {
