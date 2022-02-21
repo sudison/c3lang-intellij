@@ -9,6 +9,8 @@ import com.intellij.util.ProcessingContext
 import org.c3lang.intellijplugin.parser.psi.C3File
 import org.c3lang.intellijplugin.parser.psi.C3TokenType
 import org.c3lang.intellijplugin.parser.psi.C3Types
+import org.c3lang.intellijplugin.reference.createLookup
+import org.c3lang.intellijplugin.reference.topLevelTypes
 
 class C3CompletionProvider(private val les: List<LookupElement>) : CompletionProvider<CompletionParameters>() {
     override fun addCompletions(
@@ -19,6 +21,22 @@ class C3CompletionProvider(private val les: List<LookupElement>) : CompletionPro
         val p = result.prefixMatcher.prefix
         val a = les.filter { it.lookupString.startsWith(p) }
         a.forEach(result::addElement)
+    }
+}
+
+class C3TypeCompletionProvider() : CompletionProvider<CompletionParameters>() {
+    override fun addCompletions(
+        parameters: CompletionParameters,
+        context: ProcessingContext,
+        result: CompletionResultSet
+    ) {
+        val p = result.prefixMatcher.prefix
+        val a = parameters.position.containingFile?.topLevelTypes()?.find {
+            it.nameIdentifier?.text?.startsWith(p) ?: false
+        } ?: return
+        val t = createLookup(a.nameIdentifier?.text) ?: return
+        result.addElement(t)
+
     }
 }
 
@@ -39,7 +57,7 @@ class C3CompletionContributor : CompletionContributor() {
                 .withAutoCompletionPolicy(AutoCompletionPolicy.NEVER_AUTOCOMPLETE)
         }
 
-        private val buildInTypes =
+        val buildInTypes =
             listOf(
                 C3Types.INT_KW, C3Types.BYTE_KW, C3Types.SHORT_KW, C3Types.CHAR_KW,
                 C3Types.USHORT_KW, C3Types.UINT_KW, C3Types.LONG_KW, C3Types.ULONG_KW,
@@ -78,6 +96,22 @@ class C3CompletionContributor : CompletionContributor() {
                 psiElement(C3Types.PARAM_DECLARATION)
             ),
             C3CompletionProvider(buildInTypes)
+        )
+        extend(
+            CompletionType.BASIC,
+            psiElement(C3Types.TYPE_IDENT).withSuperParent(
+                5,
+                psiElement(C3Types.FUNC_DECLARATION)
+            ),
+            C3TypeCompletionProvider()
+        )
+        extend(
+            CompletionType.BASIC,
+            psiElement(C3Types.TYPE_IDENT).withSuperParent(
+                4,
+                psiElement(C3Types.PARAM_DECLARATION)
+            ),
+            C3TypeCompletionProvider()
         )
     }
 }
