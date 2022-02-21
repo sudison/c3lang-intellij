@@ -20,13 +20,10 @@ public interface C3PrimaryExpression extends PsiElement {
   C3GroupedExpression getGroupedExpression();
 
   @Nullable
-  C3IdentExpression getIdentExpression();
-
-  @Nullable
   C3InitializerList getInitializerList();
 
   @Nullable
-  C3Path getPath();
+  C3PathExpression getPathExpression();
 
   @Nullable
   C3StatementList getStatementList();

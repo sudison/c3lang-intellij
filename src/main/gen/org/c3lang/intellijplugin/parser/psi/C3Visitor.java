@@ -252,6 +252,10 @@ public class C3Visitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitLowercaseSymbol(@NotNull C3LowercaseSymbol o) {
+    visitPsiElement(o);
+  }
+
   public void visitMacroArgument(@NotNull C3MacroArgument o) {
     visitPsiElement(o);
   }
@@ -297,6 +301,14 @@ public class C3Visitor extends PsiElementVisitor {
   }
 
   public void visitPath(@NotNull C3Path o) {
+    visitPsiElement(o);
+  }
+
+  public void visitPathExpression(@NotNull C3PathExpression o) {
+    visitPsiElement(o);
+  }
+
+  public void visitPathd(@NotNull C3Pathd o) {
     visitPsiElement(o);
   }
 

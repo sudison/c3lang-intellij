@@ -17,7 +17,8 @@ class C3CompletionProvider(private val les: List<LookupElement>) : CompletionPro
         result: CompletionResultSet
     ) {
         val p = result.prefixMatcher.prefix
-        les.filter { it.lookupString.startsWith(p) }.forEach(result::addElement)
+        val a = les.filter { it.lookupString.startsWith(p) }
+        a.forEach(result::addElement)
     }
 }
 
@@ -37,6 +38,22 @@ class C3CompletionContributor : CompletionContributor() {
                 .withPresentableText(t.realName())
                 .withAutoCompletionPolicy(AutoCompletionPolicy.NEVER_AUTOCOMPLETE)
         }
+
+        private val buildInTypes =
+            listOf(
+                C3Types.INT_KW, C3Types.BYTE_KW, C3Types.SHORT_KW, C3Types.CHAR_KW,
+                C3Types.USHORT_KW, C3Types.UINT_KW, C3Types.LONG_KW, C3Types.ULONG_KW,
+                C3Types.HALF_KW, C3Types.FLOAT_KW, C3Types.DOUBLE_KW, C3Types.QUAD_KW,
+                C3Types.VOID_KW
+            )
+                .map {
+                    val t = it as C3TokenType
+                    LookupElementBuilder
+                        .create("${t.realName()} ")
+                        .withPresentableText(t.realName())
+                        .withAutoCompletionPolicy(AutoCompletionPolicy.NEVER_AUTOCOMPLETE)
+                }
+
     }
 
     init {
@@ -45,6 +62,22 @@ class C3CompletionContributor : CompletionContributor() {
             CompletionType.BASIC,
             psiElement(C3Types.IDENT).withParent(C3File::class.java).with(OnStatementBeginning()),
             C3CompletionProvider(topKeyWords)
+        )
+        extend(
+            CompletionType.BASIC,
+            psiElement(C3Types.IDENT).withSuperParent(
+                5,
+                psiElement(C3Types.FUNC_DECLARATION)
+            ),
+            C3CompletionProvider(buildInTypes)
+        )
+        extend(
+            CompletionType.BASIC,
+            psiElement(C3Types.IDENT).withSuperParent(
+                4,
+                psiElement(C3Types.PARAM_DECLARATION)
+            ),
+            C3CompletionProvider(buildInTypes)
         )
     }
 }

@@ -34,25 +34,8 @@ class C3TypeReference(element: PsiElement, private val id: PsiElement) :
             }
     }
 
-    override fun getVariants(): Array<Any> {
-        val r = mutableListOf<LookupElement>()
+    override fun getVariants(): Array<out LookupElement> = LookupElement.EMPTY_ARRAY
 
-        element.containingFile?.topLevelTypes()?.forEach {
-            val t = createLookup(it.nameIdentifier?.text)
-            if (t != null) {
-                r.add(t)
-            }
-        }
-
-        psiTreeWalkupInsideBlock(element) {
-            val t = createLookup(it.nameIdentifier?.text)
-            if (t != null) {
-                r.add(t)
-            }
-            false
-        }
-        return (r + buildInTypes).toTypedArray()
-    }
 
     override fun calculateDefaultRangeInElement(): TextRange {
         return TextRange.from(id.startOffsetInParent, id.textLength)

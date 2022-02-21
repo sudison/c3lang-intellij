@@ -100,13 +100,17 @@ grouped_expression ::= LP expression RP
 primary_expression ::= constant
     | STRING_LITERAL
     | NULL_KW
-    | path? ident_expression
+    | path_expression
     | base_type initializer_list
     | grouped_expression
     | type DOT (IDENT | TYPEID)
     | LP type RP (IDENT | TYPEID)
     | FN_BLOCK_START statement_list FN_BLOCK_END
     | CAST_KW LP expression AS_KW type RP
+
+pathd ::= lowercase_symbol '.'
+path_expression ::= (lowercase_symbol '.')* ident_expression {
+}
 
 const_declaration ::= CONST_KW (type CONST_IDENT | CT_CONST_IDENT) EQ initializer EOS
 
@@ -124,10 +128,10 @@ base_type ::= VOID_KW
     | float_type
     | Symbol
     | TYPE_IDENT
-    | path TYPE_IDENT
+    | path Symbol
     | CT_TYPE_IDENT
 
-Symbol ::= IDENT | TYPE_IDENT {
+Symbol ::= TYPE_IDENT | IDENT {
     mixin='org.c3lang.intellijplugin.reference.SymbolMixin'
 }
 
@@ -135,6 +139,11 @@ ident_symbol ::= IDENT {
     mixin='org.c3lang.intellijplugin.reference.SymbolMixin'
 
 }
+
+lowercase_symbol ::= IDENT {
+    mixin='org.c3lang.intellijplugin.reference.SymbolMixin'
+}
+
 
 type_suffix ::= STAR | LB (constant_expression | ADD_OP)? RB
 

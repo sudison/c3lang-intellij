@@ -49,13 +49,4 @@ class C3CompletionContributorTest : LightPlatformCodeInsightFixture4TestCase() {
             keywordCompletion(it.first, it.second)
         }
     }
-
-    @Test
-    fun testStatementType() {
-        listOf(
-            Pair("fn <caret>void main(i", "int")
-        ).forEach {
-            keywordCompletion(it.first, it.second)
-        }
-    }
 }

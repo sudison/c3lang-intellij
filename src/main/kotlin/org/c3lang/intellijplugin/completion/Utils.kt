@@ -3,6 +3,7 @@ package org.c3lang.intellijplugin.completion
 import com.intellij.patterns.ElementPattern
 import com.intellij.patterns.ObjectPattern
 import com.intellij.patterns.PatternCondition
+import com.intellij.patterns.PlatformPatterns.psiElement
 import com.intellij.patterns.PsiElementPattern
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiWhiteSpace
@@ -41,5 +42,17 @@ class OnStatementBeginning() : PatternCondition<PsiElement>("on statement beginn
     override fun accepts(t: PsiElement, context: ProcessingContext?): Boolean {
         val prev = t.prevLeafs.filter { it !is PsiWhiteSpace }.firstOrNull()
         return prev == null || prev.elementType == C3Types.EOS || prev.elementType == C3Types.RBR
+    }
+}
+
+class OnFnReturnType() : PatternCondition<PsiElement>("on fn return type") {
+    override fun accepts(t: PsiElement, context: ProcessingContext?): Boolean {
+        if (t.parent.elementType == C3Types.FUNC_NAME) {
+            val p = t.parent
+            val sibling =
+                p.leftSiblings.dropWhile { psiElement().whitespace().accepts(it) }.firstOrNull() ?: return false
+            return sibling.elementType == C3Types.FN_KW
+        }
+        return false
     }
 }

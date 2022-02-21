@@ -18,8 +18,6 @@
         <configurationType implementation="org.c3lang.intellijplugin.runner.C3RunnerConfigType"/>
         <completion.contributor language="C3"
                                 implementationClass="org.c3lang.intellijplugin.completion.C3CompletionContributor"/>
-        <psi.referenceContributor language="C3"
-                                  implementation="org.c3lang.intellijplugin.reference.C3ReferenceContributor"/>
 
         <applicationService serviceImplementation="com.github.sudison.c3langintellij.services.MyApplicationService"/>
         <projectService serviceImplementation="com.github.sudison.c3langintellij.services.MyProjectService"/>

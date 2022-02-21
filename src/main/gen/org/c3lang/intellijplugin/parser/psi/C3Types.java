@@ -67,6 +67,7 @@ public interface C3Types {
   IElementType LABELLED_STATEMENT = new C3ElementType("LABELLED_STATEMENT");
   IElementType LOGICAL_EXPRESSION = new C3ElementType("LOGICAL_EXPRESSION");
   IElementType LOGICAL_OP = new C3ElementType("LOGICAL_OP");
+  IElementType LOWERCASE_SYMBOL = new C3ElementType("LOWERCASE_SYMBOL");
   IElementType MACRO_ARGUMENT = new C3ElementType("MACRO_ARGUMENT");
   IElementType MACRO_ARGUMENT_LIST = new C3ElementType("MACRO_ARGUMENT_LIST");
   IElementType MACRO_DECLARATION = new C3ElementType("MACRO_DECLARATION");
@@ -79,6 +80,8 @@ public interface C3Types {
   IElementType PARAMETER_TYPE_LIST = new C3ElementType("PARAMETER_TYPE_LIST");
   IElementType PARAM_DECLARATION = new C3ElementType("PARAM_DECLARATION");
   IElementType PATH = new C3ElementType("PATH");
+  IElementType PATHD = new C3ElementType("PATHD");
+  IElementType PATH_EXPRESSION = new C3ElementType("PATH_EXPRESSION");
   IElementType POSTFIX_EXPRESSION = new C3ElementType("POSTFIX_EXPRESSION");
   IElementType POSTFIX_OP = new C3ElementType("POSTFIX_OP");
   IElementType PRIMARY_EXPRESSION = new C3ElementType("PRIMARY_EXPRESSION");
@@ -420,6 +423,9 @@ public interface C3Types {
       else if (type == LOGICAL_OP) {
         return new C3LogicalOpImpl(node);
       }
+      else if (type == LOWERCASE_SYMBOL) {
+        return new C3LowercaseSymbolImpl(node);
+      }
       else if (type == MACRO_ARGUMENT) {
         return new C3MacroArgumentImpl(node);
       }
@@ -455,6 +461,12 @@ public interface C3Types {
       }
       else if (type == PATH) {
         return new C3PathImpl(node);
+      }
+      else if (type == PATHD) {
+        return new C3PathdImpl(node);
+      }
+      else if (type == PATH_EXPRESSION) {
+        return new C3PathExpressionImpl(node);
       }
       else if (type == POSTFIX_EXPRESSION) {
         return new C3PostfixExpressionImpl(node);

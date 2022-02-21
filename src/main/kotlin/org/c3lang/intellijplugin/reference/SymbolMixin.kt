@@ -5,6 +5,7 @@ import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiReference
 import org.c3lang.intellijplugin.parser.psi.C3BaseType
 import org.c3lang.intellijplugin.parser.psi.C3IdentExpression
+import org.c3lang.intellijplugin.parser.psi.C3PathExpression
 
 abstract class SymbolMixin(node: ASTNode) : ASTWrapperPsiElement(node) {
     override fun getReference(): PsiReference? {
@@ -13,6 +14,9 @@ abstract class SymbolMixin(node: ASTNode) : ASTWrapperPsiElement(node) {
                 C3TypeReference(this, node.firstChildNode?.psi!!)
             }
             is C3IdentExpression -> {
+                C3TypeReference(this, node.firstChildNode?.psi!!)
+            }
+            is C3PathExpression -> {
                 C3TypeReference(this, node.firstChildNode?.psi!!)
             }
             else -> {

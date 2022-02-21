@@ -52,20 +52,14 @@ public class C3PrimaryExpressionImpl extends ASTWrapperPsiElement implements C3P
 
   @Override
   @Nullable
-  public C3IdentExpression getIdentExpression() {
-    return findChildByClass(C3IdentExpression.class);
-  }
-
-  @Override
-  @Nullable
   public C3InitializerList getInitializerList() {
     return findChildByClass(C3InitializerList.class);
   }
 
   @Override
   @Nullable
-  public C3Path getPath() {
-    return findChildByClass(C3Path.class);
+  public C3PathExpression getPathExpression() {
+    return findChildByClass(C3PathExpression.class);
   }
 
   @Override
