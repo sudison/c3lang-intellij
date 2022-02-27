@@ -50,8 +50,5 @@ class C3CompletionContributorTest : LightPlatformCodeInsightFixture4TestCase() {
         }
     }
 
-    @Test
-    fun testStructRef() {
-        keywordCompletion("struct Ab{} fn A", "Ab")
-    }
+ 
 }

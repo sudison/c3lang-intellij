@@ -84,32 +84,16 @@ class C3CompletionContributor : CompletionContributor() {
         extend(
             CompletionType.BASIC,
             psiElement(C3Types.IDENT).withSuperParent(
-                5,
-                psiElement(C3Types.FUNC_DECLARATION)
-            ),
-            C3CompletionProvider(buildInTypes)
-        )
-        extend(
-            CompletionType.BASIC,
-            psiElement(C3Types.IDENT).withSuperParent(
-                4,
-                psiElement(C3Types.PARAM_DECLARATION)
+                2,
+                psiElement(C3Types.BASE_TYPE)
             ),
             C3CompletionProvider(buildInTypes)
         )
         extend(
             CompletionType.BASIC,
             psiElement(C3Types.TYPE_IDENT).withSuperParent(
-                5,
-                psiElement(C3Types.FUNC_DECLARATION)
-            ),
-            C3TypeCompletionProvider()
-        )
-        extend(
-            CompletionType.BASIC,
-            psiElement(C3Types.TYPE_IDENT).withSuperParent(
-                4,
-                psiElement(C3Types.PARAM_DECLARATION)
+                2,
+                psiElement(C3Types.BASE_TYPE)
             ),
             C3TypeCompletionProvider()
         )
