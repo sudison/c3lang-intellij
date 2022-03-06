@@ -11,7 +11,7 @@ class C3CompletionContributorTest : LightPlatformCodeInsightFixture4TestCase() {
         myFixture.type(typeStr)
         val l = myFixture.completeBasic()
         assertTrue(l.size == 1)
-        assertEquals(l[0].lookupString, "$completion ")
+        assertEquals(l[0].lookupString, "$completion")
     }
 
     @Test
@@ -55,7 +55,9 @@ class C3CompletionContributorTest : LightPlatformCodeInsightFixture4TestCase() {
         listOf(
             Pair("fn void main(){i", "int"),
             Pair("fn void main(){int ab;a", "ab"),
-        ).forEach {
+            Pair("fn void xoo() {} fn void main(){x", "xoo"),
+
+            ).forEach {
             keywordCompletion(it.first, it.second)
         }
     }

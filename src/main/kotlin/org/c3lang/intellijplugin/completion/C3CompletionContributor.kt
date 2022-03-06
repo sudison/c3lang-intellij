@@ -61,6 +61,15 @@ class C3PathExpressionCompletionProvider() : CompletionProvider<CompletionParame
                 false
             }
         }
+
+        parameters.position.containingFile?.topLevelTypes()?.forEach {
+            if (it.nameIdentifier?.text?.startsWith(p) == true) {
+                val t = createLookup(it.nameIdentifier?.text)
+                if (t != null) {
+                    result.addElement(t)
+                }
+            }
+        }
     }
 }
 
@@ -76,7 +85,7 @@ class C3CompletionContributor : CompletionContributor() {
         ).map {
             val t = it as C3TokenType
             LookupElementBuilder
-                .create("${t.realName()} ")
+                .create(t.realName())
                 .withPresentableText(t.realName())
                 .withAutoCompletionPolicy(AutoCompletionPolicy.NEVER_AUTOCOMPLETE)
         }
@@ -91,7 +100,7 @@ class C3CompletionContributor : CompletionContributor() {
                 .map {
                     val t = it as C3TokenType
                     LookupElementBuilder
-                        .create("${t.realName()} ")
+                        .create(t.realName())
                         .withPresentableText(t.realName())
                         .withAutoCompletionPolicy(AutoCompletionPolicy.NEVER_AUTOCOMPLETE)
                 }

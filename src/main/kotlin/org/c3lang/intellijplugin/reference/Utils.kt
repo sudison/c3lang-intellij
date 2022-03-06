@@ -12,6 +12,9 @@ fun PsiFile.topLevelTypes(): List<PsiNameIdentifierOwner> {
     PsiTreeUtil.collectElementsOfType(this, C3StructDeclaration::class.java).forEach {
         types.add(it)
     }
+    PsiTreeUtil.collectElementsOfType(this, C3FuncDeclaration::class.java).forEach {
+        types.add(it)
+    }
     return types
 }
 
