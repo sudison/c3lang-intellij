@@ -10,6 +10,7 @@ import org.c3lang.intellijplugin.parser.psi.C3File
 import org.c3lang.intellijplugin.parser.psi.C3TokenType
 import org.c3lang.intellijplugin.parser.psi.C3Types
 import org.c3lang.intellijplugin.reference.createLookup
+import org.c3lang.intellijplugin.reference.psiTreeWalkupInsideBlock
 import org.c3lang.intellijplugin.reference.topLevelTypes
 
 class C3CompletionProvider(private val les: List<LookupElement>) : CompletionProvider<CompletionParameters>() {
@@ -49,6 +50,16 @@ class C3PathExpressionCompletionProvider() : CompletionProvider<CompletionParame
         val p = result.prefixMatcher.prefix
         if (p.first().isLowerCase()) {
             C3CompletionContributor.buildInTypes.filter { it.lookupString.startsWith(p) }.forEach(result::addElement)
+
+            psiTreeWalkupInsideBlock(parameters.position) {
+                if (it.nameIdentifier?.text?.startsWith(p) == true) {
+                    val t = createLookup(it.nameIdentifier?.text)
+                    if (t != null) {
+                        result.addElement(t)
+                    }
+                }
+                false
+            }
         }
     }
 }
