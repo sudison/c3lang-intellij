@@ -71,6 +71,7 @@ macro_declaration ::= MACRO_KW type? IDENT LP macro_argument_list? RP compound_s
 
 struct_or_union ::= STRUCT_KW | UNION_KW
 struct_declaration ::= struct_or_union TYPE_IDENT attributes? struct_body {
+    pin=1
     implements=['com.intellij.psi.PsiNameIdentifierOwner']
     mixin='org.c3lang.intellijplugin.reference.C3StructMixin'
 }
@@ -79,11 +80,16 @@ func_typedef ::= FN_KW failable_type parameter_type_list
 
 typedef_declaration ::= TYPEDEF_KW (type | func_typedef) AS TYPE_IDENT EOS
 
-struct_body ::= LBR struct_declaration_list RBR
+struct_body ::= LBR struct_declaration_list RBR {
+pin=1
+}
 
 struct_declaration_list ::= struct_member_declaration*
 
-struct_member_declaration ::= type identifier_list attributes? EOS
+struct_member_declaration_type ::= type identifier_list attributes? EOS {
+pin=1
+}
+struct_member_declaration ::= struct_member_declaration_type
     | struct_or_union IDENT attributes? struct_body
     | struct_or_union attributes? struct_body
 

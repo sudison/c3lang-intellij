@@ -28,26 +28,20 @@ public class C3StructMemberDeclarationImpl extends ASTWrapperPsiElement implemen
 
   @Override
   @Nullable
-  public C3IdentifierList getIdentifierList() {
-    return findChildByClass(C3IdentifierList.class);
-  }
-
-  @Override
-  @Nullable
   public C3StructBody getStructBody() {
     return findChildByClass(C3StructBody.class);
   }
 
   @Override
   @Nullable
-  public C3StructOrUnion getStructOrUnion() {
-    return findChildByClass(C3StructOrUnion.class);
+  public C3StructMemberDeclarationType getStructMemberDeclarationType() {
+    return findChildByClass(C3StructMemberDeclarationType.class);
   }
 
   @Override
   @Nullable
-  public C3Type getType() {
-    return findChildByClass(C3Type.class);
+  public C3StructOrUnion getStructOrUnion() {
+    return findChildByClass(C3StructOrUnion.class);
   }
 
 }

@@ -27,9 +27,9 @@ public class C3StructBodyImpl extends ASTWrapperPsiElement implements C3StructBo
   }
 
   @Override
-  @NotNull
+  @Nullable
   public C3StructDeclarationList getStructDeclarationList() {
-    return findNotNullChildByClass(C3StructDeclarationList.class);
+    return findChildByClass(C3StructDeclarationList.class);
   }
 
 }

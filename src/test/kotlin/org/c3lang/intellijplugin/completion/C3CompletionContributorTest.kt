@@ -61,4 +61,13 @@ class C3CompletionContributorTest : LightPlatformCodeInsightFixture4TestCase() {
             keywordCompletion(it.first, it.second)
         }
     }
+
+    @Test
+    fun testStructMember() {
+        listOf(
+            Pair("struct Ab{i", "int"),
+        ).forEach {
+            keywordCompletion(it.first, it.second)
+        }
+    }
 }

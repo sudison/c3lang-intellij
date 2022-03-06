@@ -98,6 +98,7 @@ public interface C3Types {
   IElementType STRUCT_DECLARATION = new C3ElementType("STRUCT_DECLARATION");
   IElementType STRUCT_DECLARATION_LIST = new C3ElementType("STRUCT_DECLARATION_LIST");
   IElementType STRUCT_MEMBER_DECLARATION = new C3ElementType("STRUCT_MEMBER_DECLARATION");
+  IElementType STRUCT_MEMBER_DECLARATION_TYPE = new C3ElementType("STRUCT_MEMBER_DECLARATION_TYPE");
   IElementType STRUCT_OR_UNION = new C3ElementType("STRUCT_OR_UNION");
   IElementType SYMBOL = new C3ElementType("SYMBOL");
   IElementType TL_CT_CASE = new C3ElementType("TL_CT_CASE");
@@ -515,6 +516,9 @@ public interface C3Types {
       }
       else if (type == STRUCT_MEMBER_DECLARATION) {
         return new C3StructMemberDeclarationImpl(node);
+      }
+      else if (type == STRUCT_MEMBER_DECLARATION_TYPE) {
+        return new C3StructMemberDeclarationTypeImpl(node);
       }
       else if (type == STRUCT_OR_UNION) {
         return new C3StructOrUnionImpl(node);

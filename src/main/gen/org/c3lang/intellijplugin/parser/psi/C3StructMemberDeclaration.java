@@ -8,15 +8,12 @@ import com.intellij.psi.PsiElement;
 public interface C3StructMemberDeclaration extends PsiElement {
 
   @Nullable
-  C3IdentifierList getIdentifierList();
-
-  @Nullable
   C3StructBody getStructBody();
 
   @Nullable
-  C3StructOrUnion getStructOrUnion();
+  C3StructMemberDeclarationType getStructMemberDeclarationType();
 
   @Nullable
-  C3Type getType();
+  C3StructOrUnion getStructOrUnion();
 
 }

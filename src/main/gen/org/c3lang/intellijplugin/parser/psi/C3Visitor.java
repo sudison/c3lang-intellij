@@ -376,6 +376,10 @@ public class C3Visitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitStructMemberDeclarationType(@NotNull C3StructMemberDeclarationType o) {
+    visitPsiElement(o);
+  }
+
   public void visitStructOrUnion(@NotNull C3StructOrUnion o) {
     visitPsiElement(o);
   }

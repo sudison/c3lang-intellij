@@ -27,9 +27,9 @@ public class C3StructDeclarationImpl extends C3StructMixin implements C3StructDe
   }
 
   @Override
-  @NotNull
+  @Nullable
   public C3StructBody getStructBody() {
-    return findNotNullChildByClass(C3StructBody.class);
+    return findChildByClass(C3StructBody.class);
   }
 
   @Override

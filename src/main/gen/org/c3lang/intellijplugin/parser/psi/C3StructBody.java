@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface C3StructBody extends PsiElement {
 
-  @NotNull
+  @Nullable
   C3StructDeclarationList getStructDeclarationList();
 
 }

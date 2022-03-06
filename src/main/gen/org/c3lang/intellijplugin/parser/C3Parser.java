@@ -2809,13 +2809,14 @@ public class C3Parser implements PsiParser, LightPsiParser {
   public static boolean struct_body(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "struct_body")) return false;
     if (!nextTokenIs(b, LBR)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, STRUCT_BODY, null);
     r = consumeToken(b, LBR);
-    r = r && struct_declaration_list(b, l + 1);
-    r = r && consumeToken(b, RBR);
-    exit_section_(b, m, STRUCT_BODY, r);
-    return r;
+    p = r; // pin = 1
+    r = r && report_error_(b, struct_declaration_list(b, l + 1));
+    r = p && consumeToken(b, RBR) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   /* ********************************************************** */
@@ -2823,14 +2824,15 @@ public class C3Parser implements PsiParser, LightPsiParser {
   public static boolean struct_declaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "struct_declaration")) return false;
     if (!nextTokenIs(b, "<struct declaration>", STRUCT_KW, UNION_KW)) return false;
-    boolean r;
+    boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, STRUCT_DECLARATION, "<struct declaration>");
     r = struct_or_union(b, l + 1);
-    r = r && consumeToken(b, TYPE_IDENT);
-    r = r && struct_declaration_2(b, l + 1);
-    r = r && struct_body(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
+    p = r; // pin = 1
+    r = r && report_error_(b, consumeToken(b, TYPE_IDENT));
+    r = p && report_error_(b, struct_declaration_2(b, l + 1)) && r;
+    r = p && struct_body(b, l + 1) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // attributes?
@@ -2855,38 +2857,18 @@ public class C3Parser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // type identifier_list attributes? EOS
+  // struct_member_declaration_type
   //     | struct_or_union IDENT attributes? struct_body
   //     | struct_or_union attributes? struct_body
   public static boolean struct_member_declaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "struct_member_declaration")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, STRUCT_MEMBER_DECLARATION, "<struct member declaration>");
-    r = struct_member_declaration_0(b, l + 1);
+    r = struct_member_declaration_type(b, l + 1);
     if (!r) r = struct_member_declaration_1(b, l + 1);
     if (!r) r = struct_member_declaration_2(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
-  }
-
-  // type identifier_list attributes? EOS
-  private static boolean struct_member_declaration_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "struct_member_declaration_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = type(b, l + 1);
-    r = r && identifier_list(b, l + 1);
-    r = r && struct_member_declaration_0_2(b, l + 1);
-    r = r && consumeToken(b, EOS);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // attributes?
-  private static boolean struct_member_declaration_0_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "struct_member_declaration_0_2")) return false;
-    consumeToken(b, ATTRIBUTES);
-    return true;
   }
 
   // struct_or_union IDENT attributes? struct_body
@@ -2924,6 +2906,28 @@ public class C3Parser implements PsiParser, LightPsiParser {
   // attributes?
   private static boolean struct_member_declaration_2_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "struct_member_declaration_2_1")) return false;
+    consumeToken(b, ATTRIBUTES);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // type identifier_list attributes? EOS
+  public static boolean struct_member_declaration_type(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "struct_member_declaration_type")) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, STRUCT_MEMBER_DECLARATION_TYPE, "<struct member declaration type>");
+    r = type(b, l + 1);
+    p = r; // pin = 1
+    r = r && report_error_(b, identifier_list(b, l + 1));
+    r = p && report_error_(b, struct_member_declaration_type_2(b, l + 1)) && r;
+    r = p && consumeToken(b, EOS) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  // attributes?
+  private static boolean struct_member_declaration_type_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "struct_member_declaration_type_2")) return false;
     consumeToken(b, ATTRIBUTES);
     return true;
   }

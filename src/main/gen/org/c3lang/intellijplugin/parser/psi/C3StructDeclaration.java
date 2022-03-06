@@ -8,7 +8,7 @@ import com.intellij.psi.PsiNameIdentifierOwner;
 
 public interface C3StructDeclaration extends PsiNameIdentifierOwner {
 
-  @NotNull
+  @Nullable
   C3StructBody getStructBody();
 
   @NotNull
