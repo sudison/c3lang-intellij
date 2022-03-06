@@ -50,5 +50,12 @@ class C3CompletionContributorTest : LightPlatformCodeInsightFixture4TestCase() {
         }
     }
 
- 
+    @Test
+    fun testPathExpression() {
+        listOf(
+            Pair("fn void main(){i", "int"),
+        ).forEach {
+            keywordCompletion(it.first, it.second)
+        }
+    }
 }

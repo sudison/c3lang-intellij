@@ -40,6 +40,19 @@ class C3TypeCompletionProvider() : CompletionProvider<CompletionParameters>() {
     }
 }
 
+class C3PathExpressionCompletionProvider() : CompletionProvider<CompletionParameters>() {
+    override fun addCompletions(
+        parameters: CompletionParameters,
+        context: ProcessingContext,
+        result: CompletionResultSet
+    ) {
+        val p = result.prefixMatcher.prefix
+        if (p.first().isLowerCase()) {
+            C3CompletionContributor.buildInTypes.filter { it.lookupString.startsWith(p) }.forEach(result::addElement)
+        }
+    }
+}
+
 class C3CompletionContributor : CompletionContributor() {
     companion object {
         private val topKeyWords = listOf(
@@ -96,6 +109,14 @@ class C3CompletionContributor : CompletionContributor() {
                 psiElement(C3Types.BASE_TYPE)
             ),
             C3TypeCompletionProvider()
+        )
+        extend(
+            CompletionType.BASIC,
+            psiElement(C3Types.IDENT).withSuperParent(
+                3,
+                psiElement(C3Types.PATH_EXPRESSION)
+            ),
+            C3PathExpressionCompletionProvider()
         )
     }
 }
