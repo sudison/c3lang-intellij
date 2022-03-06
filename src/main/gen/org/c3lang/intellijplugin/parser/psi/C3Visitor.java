@@ -212,6 +212,10 @@ public class C3Visitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitIfStatement(@NotNull C3IfStatement o) {
+    visitPsiElement(o);
+  }
+
   public void visitImportDecl(@NotNull C3ImportDecl o) {
     visitPsiElement(o);
   }

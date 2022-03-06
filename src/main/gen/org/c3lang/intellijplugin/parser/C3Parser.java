@@ -1420,6 +1420,41 @@ public class C3Parser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // IF_KW LP decl_expr_list RP compound_statement (ELSE_KW compound_statement)?
+  public static boolean if_statement(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "if_statement")) return false;
+    if (!nextTokenIs(b, IF_KW)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, IF_STATEMENT, null);
+    r = consumeTokens(b, 1, IF_KW, LP);
+    p = r; // pin = 1
+    r = r && report_error_(b, decl_expr_list(b, l + 1));
+    r = p && report_error_(b, consumeToken(b, RP)) && r;
+    r = p && report_error_(b, compound_statement(b, l + 1)) && r;
+    r = p && if_statement_5(b, l + 1) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  // (ELSE_KW compound_statement)?
+  private static boolean if_statement_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "if_statement_5")) return false;
+    if_statement_5_0(b, l + 1);
+    return true;
+  }
+
+  // ELSE_KW compound_statement
+  private static boolean if_statement_5_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "if_statement_5_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, ELSE_KW);
+    r = r && compound_statement(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
   // IMPORT_KW import_path (COLON specified_import_list)? EOS
   public static boolean import_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "import_decl")) return false;
@@ -2488,14 +2523,14 @@ public class C3Parser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // SWITCH_KW LP decl_expr_list RP compound_statement
-  //     | IF_KW LP decl_expr_list RP compound_statement (ELSE_KW compound_statement)?
+  //     | if_statement
   public static boolean selection_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "selection_statement")) return false;
     if (!nextTokenIs(b, "<selection statement>", IF_KW, SWITCH_KW)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, SELECTION_STATEMENT, "<selection statement>");
     r = selection_statement_0(b, l + 1);
-    if (!r) r = selection_statement_1(b, l + 1);
+    if (!r) r = if_statement(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -2508,38 +2543,6 @@ public class C3Parser implements PsiParser, LightPsiParser {
     r = consumeTokens(b, 0, SWITCH_KW, LP);
     r = r && decl_expr_list(b, l + 1);
     r = r && consumeToken(b, RP);
-    r = r && compound_statement(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // IF_KW LP decl_expr_list RP compound_statement (ELSE_KW compound_statement)?
-  private static boolean selection_statement_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "selection_statement_1")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, IF_KW, LP);
-    r = r && decl_expr_list(b, l + 1);
-    r = r && consumeToken(b, RP);
-    r = r && compound_statement(b, l + 1);
-    r = r && selection_statement_1_5(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // (ELSE_KW compound_statement)?
-  private static boolean selection_statement_1_5(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "selection_statement_1_5")) return false;
-    selection_statement_1_5_0(b, l + 1);
-    return true;
-  }
-
-  // ELSE_KW compound_statement
-  private static boolean selection_statement_1_5_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "selection_statement_1_5_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, ELSE_KW);
     r = r && compound_statement(b, l + 1);
     exit_section_(b, m, null, r);
     return r;

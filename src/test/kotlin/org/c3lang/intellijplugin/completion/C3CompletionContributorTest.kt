@@ -70,4 +70,13 @@ class C3CompletionContributorTest : LightPlatformCodeInsightFixture4TestCase() {
             keywordCompletion(it.first, it.second)
         }
     }
+
+    @Test
+    fun testIfStatement() {
+        listOf(
+            Pair("fn void f() { int ab;if (a", "ab"),
+        ).forEach {
+            keywordCompletion(it.first, it.second)
+        }
+    }
 }
