@@ -10,14 +10,14 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static org.c3lang.intellijplugin.parser.psi.C3Types.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 
-public class C3SelectionStatementImpl extends ASTWrapperPsiElement implements C3SelectionStatement {
+public class C3SwitchStatementImpl extends ASTWrapperPsiElement implements C3SwitchStatement {
 
-  public C3SelectionStatementImpl(@NotNull ASTNode node) {
+  public C3SwitchStatementImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull C3Visitor visitor) {
-    visitor.visitSelectionStatement(this);
+    visitor.visitSwitchStatement(this);
   }
 
   @Override
@@ -28,14 +28,14 @@ public class C3SelectionStatementImpl extends ASTWrapperPsiElement implements C3
 
   @Override
   @Nullable
-  public C3IfStatement getIfStatement() {
-    return findChildByClass(C3IfStatement.class);
+  public C3CompoundStatement getCompoundStatement() {
+    return findChildByClass(C3CompoundStatement.class);
   }
 
   @Override
   @Nullable
-  public C3SwitchStatement getSwitchStatement() {
-    return findChildByClass(C3SwitchStatement.class);
+  public C3DeclExprList getDeclExprList() {
+    return findChildByClass(C3DeclExprList.class);
   }
 
 }

@@ -388,6 +388,10 @@ public class C3Visitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitSwitchStatement(@NotNull C3SwitchStatement o) {
+    visitPsiElement(o);
+  }
+
   public void visitTlCtCase(@NotNull C3TlCtCase o) {
     visitPsiElement(o);
   }

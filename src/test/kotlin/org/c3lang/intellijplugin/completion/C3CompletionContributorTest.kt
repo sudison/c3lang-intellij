@@ -79,4 +79,13 @@ class C3CompletionContributorTest : LightPlatformCodeInsightFixture4TestCase() {
             keywordCompletion(it.first, it.second)
         }
     }
+
+    @Test
+    fun testSwitchStatement() {
+        listOf(
+            Pair("fn void f() { int ab;switch (a", "ab"),
+        ).forEach {
+            keywordCompletion(it.first, it.second)
+        }
+    }
 }

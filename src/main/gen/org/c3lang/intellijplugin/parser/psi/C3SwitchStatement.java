@@ -5,12 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface C3SelectionStatement extends PsiElement {
+public interface C3SwitchStatement extends PsiElement {
 
   @Nullable
-  C3IfStatement getIfStatement();
+  C3CompoundStatement getCompoundStatement();
 
   @Nullable
-  C3SwitchStatement getSwitchStatement();
+  C3DeclExprList getDeclExprList();
 
 }

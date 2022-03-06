@@ -2522,29 +2522,16 @@ public class C3Parser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // SWITCH_KW LP decl_expr_list RP compound_statement
+  // switch_statement
   //     | if_statement
   public static boolean selection_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "selection_statement")) return false;
     if (!nextTokenIs(b, "<selection statement>", IF_KW, SWITCH_KW)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, SELECTION_STATEMENT, "<selection statement>");
-    r = selection_statement_0(b, l + 1);
+    r = switch_statement(b, l + 1);
     if (!r) r = if_statement(b, l + 1);
     exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // SWITCH_KW LP decl_expr_list RP compound_statement
-  private static boolean selection_statement_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "selection_statement_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, SWITCH_KW, LP);
-    r = r && decl_expr_list(b, l + 1);
-    r = r && consumeToken(b, RP);
-    r = r && compound_statement(b, l + 1);
-    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -2946,6 +2933,22 @@ public class C3Parser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, UNION_KW);
     exit_section_(b, l, m, r, false, null);
     return r;
+  }
+
+  /* ********************************************************** */
+  // SWITCH_KW LP decl_expr_list RP compound_statement
+  public static boolean switch_statement(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "switch_statement")) return false;
+    if (!nextTokenIs(b, SWITCH_KW)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, SWITCH_STATEMENT, null);
+    r = consumeTokens(b, 1, SWITCH_KW, LP);
+    p = r; // pin = 1
+    r = r && report_error_(b, decl_expr_list(b, l + 1));
+    r = p && report_error_(b, consumeToken(b, RP)) && r;
+    r = p && compound_statement(b, l + 1) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   /* ********************************************************** */

@@ -200,7 +200,10 @@ defer_catch_body ::= compound_statement
 if_statement ::= IF_KW LP decl_expr_list RP compound_statement (ELSE_KW compound_statement)? {
 pin=1
 }
-selection_statement ::= SWITCH_KW LP decl_expr_list RP compound_statement
+switch_statement ::= SWITCH_KW LP decl_expr_list RP compound_statement {
+pin=1
+}
+selection_statement ::= switch_statement
     | if_statement
 
 
