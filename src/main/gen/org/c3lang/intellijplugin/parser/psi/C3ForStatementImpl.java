@@ -27,9 +27,9 @@ public class C3ForStatementImpl extends ASTWrapperPsiElement implements C3ForSta
   }
 
   @Override
-  @NotNull
+  @Nullable
   public C3DeclExprList getDeclExprList() {
-    return findNotNullChildByClass(C3DeclExprList.class);
+    return findChildByClass(C3DeclExprList.class);
   }
 
   @Override
@@ -39,15 +39,15 @@ public class C3ForStatementImpl extends ASTWrapperPsiElement implements C3ForSta
   }
 
   @Override
-  @NotNull
+  @Nullable
   public C3ExpressionStatement getExpressionStatement() {
-    return findNotNullChildByClass(C3ExpressionStatement.class);
+    return findChildByClass(C3ExpressionStatement.class);
   }
 
   @Override
-  @NotNull
+  @Nullable
   public C3Statement getStatement() {
-    return findNotNullChildByClass(C3Statement.class);
+    return findChildByClass(C3Statement.class);
   }
 
 }

@@ -7,16 +7,16 @@ import com.intellij.psi.PsiElement;
 
 public interface C3ForStatement extends PsiElement {
 
-  @NotNull
+  @Nullable
   C3DeclExprList getDeclExprList();
 
   @Nullable
   C3ExpressionList getExpressionList();
 
-  @NotNull
+  @Nullable
   C3ExpressionStatement getExpressionStatement();
 
-  @NotNull
+  @Nullable
   C3Statement getStatement();
 
 }

@@ -1221,17 +1221,18 @@ public class C3Parser implements PsiParser, LightPsiParser {
   public static boolean for_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "for_statement")) return false;
     if (!nextTokenIs(b, FOR_KW)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, FOR_KW, LP);
-    r = r && decl_expr_list(b, l + 1);
-    r = r && consumeToken(b, EOS);
-    r = r && expression_statement(b, l + 1);
-    r = r && for_statement_5(b, l + 1);
-    r = r && consumeToken(b, RP);
-    r = r && statement(b, l + 1);
-    exit_section_(b, m, FOR_STATEMENT, r);
-    return r;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, FOR_STATEMENT, null);
+    r = consumeTokens(b, 1, FOR_KW, LP);
+    p = r; // pin = 1
+    r = r && report_error_(b, decl_expr_list(b, l + 1));
+    r = p && report_error_(b, consumeToken(b, EOS)) && r;
+    r = p && report_error_(b, expression_statement(b, l + 1)) && r;
+    r = p && report_error_(b, for_statement_5(b, l + 1)) && r;
+    r = p && report_error_(b, consumeToken(b, RP)) && r;
+    r = p && statement(b, l + 1) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // expression_list?

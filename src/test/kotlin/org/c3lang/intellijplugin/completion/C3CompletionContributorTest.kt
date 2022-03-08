@@ -88,4 +88,18 @@ class C3CompletionContributorTest : LightPlatformCodeInsightFixture4TestCase() {
             keywordCompletion(it.first, it.second)
         }
     }
+
+    @Test
+    fun testForStatement() {
+        listOf(
+            Pair("fn void f() { for(i", "int"),
+            Pair("fn void f() { for(s", "short"),
+            Pair("fn void f() { for(int abc = 0; a", "abc"),
+            Pair("fn void f() { for(int abc = 0; abc > 0;) {a", "abc"),
+            Pair("fn void f() { int abc = 0;for(int i = 0; i > 0;) {a", "abc"),
+
+            ).forEach {
+            keywordCompletion(it.first, it.second)
+        }
+    }
 }

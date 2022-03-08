@@ -19,7 +19,9 @@ fun PsiFile.topLevelTypes(): List<PsiNameIdentifierOwner> {
 }
 
 fun psiTreeWalkupInsideBlock(element: PsiElement, consumer: (PsiNameIdentifierOwner) -> Boolean) {
-    var statement = PsiTreeUtil.findFirstParent(element) { it is C3Statement }
+    var statement = PsiTreeUtil.findFirstParent(element) {
+        it is C3Statement || (it is C3ExpressionStatement && it.parent is C3ForStatement)
+    }
     while (statement != null) {
         var e: PsiElement? = statement.prevSibling
         while (e != null) {
@@ -29,8 +31,17 @@ fun psiTreeWalkupInsideBlock(element: PsiElement, consumer: (PsiNameIdentifierOw
                     val declaration = declarationStatement.declaration
                     if (consumer(declaration)) return
                 }
+            } else if (C3Types.DECL_EXPR_LIST == e.node.elementType) {
+                val declExprList = e as C3DeclExprList
+                declExprList.declarationList.forEach {
+                    if (consumer(it)) return
+                }
             }
             e = e.prevSibling
+            if (e == null && statement?.parent is C3ForStatement) {
+                e = PsiTreeUtil.findFirstParent(statement.parent) { it is C3Statement }
+                statement = e
+            }
         }
 
         val block = PsiTreeUtil.findFirstParent(statement) { it is C3CompoundStatement }
