@@ -14,7 +14,7 @@ class C3ParserTests : ParsingTestCase("", C3FileType.defaultExtension, C3ParserD
         println(name)
 
         myFile = createPsiFile(
-            testName, "fn void f() { for(int abc = 0; abc > 0;) {a"
+            testName, "fn void f() { for(int abc = 0; abc > 0;a"
         )
         ensureParsed(myFile)
         println(toParseTreeText(myFile, skipSpaces(), includeRanges()))

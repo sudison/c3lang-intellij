@@ -20,7 +20,9 @@ fun PsiFile.topLevelTypes(): List<PsiNameIdentifierOwner> {
 
 fun psiTreeWalkupInsideBlock(element: PsiElement, consumer: (PsiNameIdentifierOwner) -> Boolean) {
     var statement = PsiTreeUtil.findFirstParent(element) {
-        it is C3Statement || (it is C3ExpressionStatement && it.parent is C3ForStatement)
+        it is C3Statement ||
+                (it is C3ExpressionStatement && it.parent is C3ForStatement) ||
+                (it is C3ExpressionList && it.parent is C3ForStatement)
     }
     while (statement != null) {
         var e: PsiElement? = statement.prevSibling
