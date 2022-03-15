@@ -32,10 +32,4 @@ public class C3PathExpressionImpl extends ASTWrapperPsiElement implements C3Path
     return findNotNullChildByClass(C3IdentExpression.class);
   }
 
-  @Override
-  @NotNull
-  public List<C3Pathd> getPathdList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, C3Pathd.class);
-  }
-
 }

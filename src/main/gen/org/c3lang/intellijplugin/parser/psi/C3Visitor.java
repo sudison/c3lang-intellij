@@ -312,10 +312,6 @@ public class C3Visitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitPathd(@NotNull C3Pathd o) {
-    visitPsiElement(o);
-  }
-
   public void visitPostfixExpression(@NotNull C3PostfixExpression o) {
     visitPsiElement(o);
   }

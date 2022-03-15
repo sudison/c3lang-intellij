@@ -81,7 +81,6 @@ public interface C3Types {
   IElementType PARAMETER_TYPE_LIST = new C3ElementType("PARAMETER_TYPE_LIST");
   IElementType PARAM_DECLARATION = new C3ElementType("PARAM_DECLARATION");
   IElementType PATH = new C3ElementType("PATH");
-  IElementType PATHD = new C3ElementType("PATHD");
   IElementType PATH_EXPRESSION = new C3ElementType("PATH_EXPRESSION");
   IElementType POSTFIX_EXPRESSION = new C3ElementType("POSTFIX_EXPRESSION");
   IElementType POSTFIX_OP = new C3ElementType("POSTFIX_OP");
@@ -468,9 +467,6 @@ public interface C3Types {
       }
       else if (type == PATH) {
         return new C3PathImpl(node);
-      }
-      else if (type == PATHD) {
-        return new C3PathdImpl(node);
       }
       else if (type == PATH_EXPRESSION) {
         return new C3PathExpressionImpl(node);

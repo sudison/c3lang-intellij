@@ -114,9 +114,7 @@ primary_expression ::= constant
     | FN_BLOCK_START statement_list FN_BLOCK_END
     | CAST_KW LP expression AS_KW type RP
 
-pathd ::= lowercase_symbol '.' | lowercase_symbol SCOPE
-
-path_expression ::= (pathd)* ident_expression {
+path_expression ::= (IDENT '.' | IDENT SCOPE)* ident_expression {
 }
 
 const_declaration ::= CONST_KW (type CONST_IDENT | CT_CONST_IDENT) EQ initializer EOS

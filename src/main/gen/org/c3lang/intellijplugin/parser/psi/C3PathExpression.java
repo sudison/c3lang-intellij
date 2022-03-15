@@ -10,7 +10,4 @@ public interface C3PathExpression extends PsiElement {
   @NotNull
   C3IdentExpression getIdentExpression();
 
-  @NotNull
-  List<C3Pathd> getPathdList();
-
 }
