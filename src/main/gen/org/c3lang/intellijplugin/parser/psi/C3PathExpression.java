@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface C3PathExpression extends PsiElement {
 
   @NotNull
+  List<C3Symbol> getSymbolList();
+
+  @NotNull
   C3IdentExpression getIdentExpression();
 
 }

@@ -32,6 +32,7 @@ UC_ALPHANUM_US  = {UC_LETTER_US} | {DIGIT}
 
 IDENTIFIER      = "_"* {LC_LETTER} {ALPHANUM_US}*
 TYPE_IDENT      = "_"* {UC_LETTER} {ALPHANUM_US}*
+CONST_IDENT     = {UC_LETTER}+
 CT_IDENT        = "$" {IDENTIFIER}
 CT_CONST_IDENT  = "$" {TYPE_IDENT}
 CT_TYPE_IDENT   = "$" {TYPE_IDENT}
@@ -153,7 +154,7 @@ STRING_LITERAL = \".*\"
 
 
     {INTEGER} { return C3Types.INT_LITERAL; }
-
+    {CONST_IDENT} {return C3Types.CONST_IDENT;}
     {CT_CONST_IDENT} { return C3Types.CT_CONST_IDENT; }
 
     {TYPE_IDENT}  { return C3Types.TYPE_IDENT; }
