@@ -126,6 +126,7 @@ STRING_LITERAL = \".*\"
     "@" { return C3Types.AT; }
     "?:" { return C3Types.ELVIS; }
     "?" { return C3Types.QUESTION; }
+    "::" { return C3Types.SCOPE; }
     ":" { return C3Types.COLON; }
     "<" { return C3Types.LT_OP; }
     ">" { return C3Types.GT_OP; }

@@ -230,9 +230,8 @@ public class C3Parser implements PsiParser, LightPsiParser {
   //     | BOOL_KW
   //     | integer_type
   //     | float_type
-  //     | Symbol
+  //     | Symbol (SCOPE Symbol)*
   //     | TYPE_IDENT
-  //     | path Symbol
   //     | CT_TYPE_IDENT
   public static boolean base_type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "base_type")) return false;
@@ -242,20 +241,41 @@ public class C3Parser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, BOOL_KW);
     if (!r) r = integer_type(b, l + 1);
     if (!r) r = float_type(b, l + 1);
-    if (!r) r = Symbol(b, l + 1);
+    if (!r) r = base_type_4(b, l + 1);
     if (!r) r = consumeToken(b, TYPE_IDENT);
-    if (!r) r = base_type_6(b, l + 1);
     if (!r) r = consumeToken(b, CT_TYPE_IDENT);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // path Symbol
-  private static boolean base_type_6(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "base_type_6")) return false;
+  // Symbol (SCOPE Symbol)*
+  private static boolean base_type_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "base_type_4")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = path(b, l + 1);
+    r = Symbol(b, l + 1);
+    r = r && base_type_4_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // (SCOPE Symbol)*
+  private static boolean base_type_4_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "base_type_4_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!base_type_4_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "base_type_4_1", c)) break;
+    }
+    return true;
+  }
+
+  // SCOPE Symbol
+  private static boolean base_type_4_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "base_type_4_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, SCOPE);
     r = r && Symbol(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
@@ -1489,19 +1509,19 @@ public class C3Parser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IDENT (DOT IDENT)*
+  // Symbol (SCOPE Symbol)*
   public static boolean import_path(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "import_path")) return false;
-    if (!nextTokenIs(b, IDENT)) return false;
+    if (!nextTokenIs(b, "<import path>", IDENT, TYPE_IDENT)) return false;
     boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, IDENT);
+    Marker m = enter_section_(b, l, _NONE_, IMPORT_PATH, "<import path>");
+    r = Symbol(b, l + 1);
     r = r && import_path_1(b, l + 1);
-    exit_section_(b, m, IMPORT_PATH, r);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // (DOT IDENT)*
+  // (SCOPE Symbol)*
   private static boolean import_path_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "import_path_1")) return false;
     while (true) {
@@ -1512,12 +1532,13 @@ public class C3Parser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // DOT IDENT
+  // SCOPE Symbol
   private static boolean import_path_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "import_path_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, DOT, IDENT);
+    r = consumeToken(b, SCOPE);
+    r = r && Symbol(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -2209,34 +2230,46 @@ public class C3Parser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (IDENT DOT)+
+  // (Symbol SCOPE)+ Symbol
   public static boolean path(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "path")) return false;
-    if (!nextTokenIs(b, IDENT)) return false;
+    if (!nextTokenIs(b, "<path>", IDENT, TYPE_IDENT)) return false;
     boolean r;
-    Marker m = enter_section_(b);
+    Marker m = enter_section_(b, l, _NONE_, PATH, "<path>");
     r = path_0(b, l + 1);
-    while (r) {
-      int c = current_position_(b);
-      if (!path_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "path", c)) break;
-    }
-    exit_section_(b, m, PATH, r);
+    r = r && Symbol(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // IDENT DOT
+  // (Symbol SCOPE)+
   private static boolean path_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "path_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, IDENT, DOT);
+    r = path_0_0(b, l + 1);
+    while (r) {
+      int c = current_position_(b);
+      if (!path_0_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "path_0", c)) break;
+    }
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // Symbol SCOPE
+  private static boolean path_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "path_0_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = Symbol(b, l + 1);
+    r = r && consumeToken(b, SCOPE);
     exit_section_(b, m, null, r);
     return r;
   }
 
   /* ********************************************************** */
-  // (lowercase_symbol '.')* ident_expression {
+  // (pathd)* ident_expression {
   // }
   public static boolean path_expression(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "path_expression")) return false;
@@ -2249,7 +2282,7 @@ public class C3Parser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // (lowercase_symbol '.')*
+  // (pathd)*
   private static boolean path_expression_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "path_expression_0")) return false;
     while (true) {
@@ -2260,13 +2293,12 @@ public class C3Parser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // lowercase_symbol '.'
+  // (pathd)
   private static boolean path_expression_0_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "path_expression_0_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = lowercase_symbol(b, l + 1);
-    r = r && consumeToken(b, ".");
+    r = pathd(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -2278,15 +2310,37 @@ public class C3Parser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // lowercase_symbol '.'
+  // lowercase_symbol '.' | lowercase_symbol SCOPE
   public static boolean pathd(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "pathd")) return false;
     if (!nextTokenIs(b, IDENT)) return false;
     boolean r;
     Marker m = enter_section_(b);
+    r = pathd_0(b, l + 1);
+    if (!r) r = pathd_1(b, l + 1);
+    exit_section_(b, m, PATHD, r);
+    return r;
+  }
+
+  // lowercase_symbol '.'
+  private static boolean pathd_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "pathd_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
     r = lowercase_symbol(b, l + 1);
     r = r && consumeToken(b, ".");
-    exit_section_(b, m, PATHD, r);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // lowercase_symbol SCOPE
+  private static boolean pathd_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "pathd_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = lowercase_symbol(b, l + 1);
+    r = r && consumeToken(b, SCOPE);
+    exit_section_(b, m, null, r);
     return r;
   }
 

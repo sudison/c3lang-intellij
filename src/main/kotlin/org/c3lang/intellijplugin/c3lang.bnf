@@ -25,9 +25,9 @@ specified_import_list ::= specified_import (COMMA specified_import)*
 
 import_decl ::= IMPORT_KW import_path (COLON specified_import_list)? EOS
 
-import_path ::= IDENT (DOT IDENT)*
+import_path ::= Symbol (SCOPE Symbol)*
 
-path ::= (IDENT DOT)+
+path ::= (Symbol SCOPE)+ Symbol
 
 module_param ::= CT_IDENT | HASH_IDENT | TYPE_IDENT | CT_TYPE_IDENT | IDENT
 
@@ -114,8 +114,9 @@ primary_expression ::= constant
     | FN_BLOCK_START statement_list FN_BLOCK_END
     | CAST_KW LP expression AS_KW type RP
 
-pathd ::= lowercase_symbol '.'
-path_expression ::= (lowercase_symbol '.')* ident_expression {
+pathd ::= lowercase_symbol '.' | lowercase_symbol SCOPE
+
+path_expression ::= (pathd)* ident_expression {
 }
 
 const_declaration ::= CONST_KW (type CONST_IDENT | CT_CONST_IDENT) EQ initializer EOS
@@ -132,9 +133,8 @@ base_type ::= VOID_KW
     | BOOL_KW
     | integer_type
     | float_type
-    | Symbol
+    | Symbol (SCOPE Symbol)*
     | TYPE_IDENT
-    | path Symbol
     | CT_TYPE_IDENT
 
 Symbol ::= TYPE_IDENT | IDENT {

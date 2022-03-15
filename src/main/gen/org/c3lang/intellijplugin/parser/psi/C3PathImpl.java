@@ -26,4 +26,10 @@ public class C3PathImpl extends ASTWrapperPsiElement implements C3Path {
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public List<C3Symbol> getSymbolList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, C3Symbol.class);
+  }
+
 }

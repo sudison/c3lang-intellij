@@ -7,4 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface C3ImportPath extends PsiElement {
 
+  @NotNull
+  List<C3Symbol> getSymbolList();
+
 }

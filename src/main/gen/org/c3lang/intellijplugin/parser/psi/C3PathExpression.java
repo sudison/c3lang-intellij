@@ -11,6 +11,6 @@ public interface C3PathExpression extends PsiElement {
   C3IdentExpression getIdentExpression();
 
   @NotNull
-  List<C3LowercaseSymbol> getLowercaseSymbolList();
+  List<C3Pathd> getPathdList();
 
 }

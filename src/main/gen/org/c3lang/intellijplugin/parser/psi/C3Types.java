@@ -220,6 +220,7 @@ public interface C3Types {
   IElementType RETURN_KW = new C3TokenType("RETURN_KW");
   IElementType RIGHT_OP = new C3TokenType("RIGHT_OP");
   IElementType RP = new C3TokenType("RP");
+  IElementType SCOPE = new C3TokenType("SCOPE");
   IElementType SHL_ASSIGN = new C3TokenType("SHL_ASSIGN");
   IElementType SHORT_KW = new C3TokenType("SHORT_KW");
   IElementType SHR_ASSIGN = new C3TokenType("SHR_ASSIGN");

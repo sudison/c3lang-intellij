@@ -34,8 +34,8 @@ public class C3PathExpressionImpl extends ASTWrapperPsiElement implements C3Path
 
   @Override
   @NotNull
-  public List<C3LowercaseSymbol> getLowercaseSymbolList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, C3LowercaseSymbol.class);
+  public List<C3Pathd> getPathdList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, C3Pathd.class);
   }
 
 }

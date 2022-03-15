@@ -27,9 +27,9 @@ public class C3BaseTypeImpl extends ASTWrapperPsiElement implements C3BaseType {
   }
 
   @Override
-  @Nullable
-  public C3Symbol getSymbol() {
-    return findChildByClass(C3Symbol.class);
+  @NotNull
+  public List<C3Symbol> getSymbolList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, C3Symbol.class);
   }
 
   @Override
@@ -42,12 +42,6 @@ public class C3BaseTypeImpl extends ASTWrapperPsiElement implements C3BaseType {
   @Nullable
   public C3IntegerType getIntegerType() {
     return findChildByClass(C3IntegerType.class);
-  }
-
-  @Override
-  @Nullable
-  public C3Path getPath() {
-    return findChildByClass(C3Path.class);
   }
 
 }
