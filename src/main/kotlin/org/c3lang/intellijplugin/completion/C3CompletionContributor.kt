@@ -78,9 +78,9 @@ class C3NestedPathExpressionCompletionProvider() : CompletionProvider<Completion
             result: CompletionResultSet
     ) {
         val p = result.prefixMatcher.prefix
-        var pathExp = parameters.position.parent?.parent
-        if (pathExp is C3IdentExpression) {
-            pathExp = pathExp?.parent
+        var pathExp = parameters.position.parent
+        if (pathExp is C3IdentSymbol) {
+            pathExp = pathExp?.parent?.parent
         }
         if (pathExp is C3PathExpression) {
             val s = pathExp.firstChild as C3Symbol
@@ -178,8 +178,8 @@ class C3CompletionContributor : CompletionContributor() {
         )
         extend(
                 CompletionType.BASIC,
-                psiElement(C3Types.TYPE_IDENT).withSuperParent(
-                        2,
+                psiElement(C3Types.INTELLIJ_RULEZ).withSuperParent(
+                        1,
                         psiElement(C3Types.PATH_EXPRESSION)
                 ),
                 C3NestedPathExpressionCompletionProvider()

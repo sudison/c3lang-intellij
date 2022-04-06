@@ -2269,7 +2269,7 @@ public class C3Parser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (Symbol '.' | Symbol SCOPE)* ident_expression | (Symbol '.' | Symbol SCOPE)+ Symbol {
+  // (Symbol '.' | Symbol SCOPE)* ident_expression | (Symbol '.' | Symbol SCOPE)+ INTELLIJ_RULEZ {
   // }
   public static boolean path_expression(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "path_expression")) return false;
@@ -2336,14 +2336,14 @@ public class C3Parser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // (Symbol '.' | Symbol SCOPE)+ Symbol {
+  // (Symbol '.' | Symbol SCOPE)+ INTELLIJ_RULEZ {
   // }
   private static boolean path_expression_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "path_expression_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = path_expression_1_0(b, l + 1);
-    r = r && Symbol(b, l + 1);
+    r = r && consumeToken(b, INTELLIJ_RULEZ);
     r = r && path_expression_1_2(b, l + 1);
     exit_section_(b, m, null, r);
     return r;

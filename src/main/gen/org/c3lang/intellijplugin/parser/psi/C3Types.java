@@ -188,6 +188,7 @@ public interface C3Types {
   IElementType IF_KW = new C3TokenType("IF_KW");
   IElementType IMPORT_KW = new C3TokenType("IMPORT_KW");
   IElementType INC_OP = new C3TokenType("INC_OP");
+  IElementType INTELLIJ_RULEZ = new C3TokenType("INTELLIJ_RULEZ");
   IElementType INT_KW = new C3TokenType("INT_KW");
   IElementType INT_LITERAL = new C3TokenType("INT_LITERAL");
   IElementType IN_KW = new C3TokenType("IN_KW");

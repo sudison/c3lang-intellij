@@ -112,6 +112,8 @@ STRING_LITERAL = \".*\"
     "double" { return C3Types.DOUBLE_KW; }
     "quad" { return C3Types.QUAD_KW; }
 
+    "IntellijIdeaRulezzz" {return C3Types.INTELLIJ_RULEZ;}
+
     "..." { return C3Types.ELLIPSIS; }
     "({" { return C3Types.FN_BLOCK_START; }
     "})" { return C3Types.FN_BLOCK_END; }
