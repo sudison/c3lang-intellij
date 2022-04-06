@@ -17,11 +17,11 @@ class C3CompletionContributorTest : LightPlatformCodeInsightFixture4TestCase() {
     @Test
     fun testTopLevelKeywordsCompletion() {
         listOf(
-            Pair("f", "fn"),
-            Pair("s", "struct"),
-            Pair("en", "enum"),
-            Pair("ex", "extern"),
-            Pair("c", "const")
+                Pair("f", "fn"),
+                Pair("s", "struct"),
+                Pair("en", "enum"),
+                Pair("ex", "extern"),
+                Pair("c", "const")
         ).forEach {
             keywordCompletion(it.first, it.second)
         }
@@ -30,10 +30,10 @@ class C3CompletionContributorTest : LightPlatformCodeInsightFixture4TestCase() {
     @Test
     fun testFunctionReturnType() {
         listOf(
-            Pair("fn i", "int"), Pair("fn c", "char"),
-            Pair("fn b", "byte"), Pair("fn s", "short"), Pair("fn l", "long"),
-            Pair("fn h", "half"), Pair("fn f", "float"), Pair("fn d", "double"), Pair("fn q", "quad"),
-            Pair("fn v", "void")
+                Pair("fn i", "int"), Pair("fn c", "char"),
+                Pair("fn b", "byte"), Pair("fn s", "short"), Pair("fn l", "long"),
+                Pair("fn h", "half"), Pair("fn f", "float"), Pair("fn d", "double"), Pair("fn q", "quad"),
+                Pair("fn v", "void")
         ).forEach {
             keywordCompletion(it.first, it.second)
         }
@@ -42,9 +42,9 @@ class C3CompletionContributorTest : LightPlatformCodeInsightFixture4TestCase() {
     @Test
     fun testFunParameterType() {
         listOf(
-            Pair("fn void main(i", "int"),
-            Pair("fn void main(int i, i", "int"),
-            Pair("fn void main(int i, int i, i", "int")
+                Pair("fn void main(i", "int"),
+                Pair("fn void main(int i, i", "int"),
+                Pair("fn void main(int i, int i, i", "int")
         ).forEach {
             keywordCompletion(it.first, it.second)
         }
@@ -53,11 +53,12 @@ class C3CompletionContributorTest : LightPlatformCodeInsightFixture4TestCase() {
     @Test
     fun testPathExpression() {
         listOf(
-            Pair("fn void main(){i", "int"),
-            Pair("fn void main(){int ab;a", "ab"),
-            Pair("fn void xoo() {} fn void main(){x", "xoo"),
-
-            ).forEach {
+                Pair("fn void main(){i", "int"),
+                Pair("fn void main(){int ab;a", "ab"),
+                Pair("fn void xoo() {} fn void main(){x", "xoo"),
+                Pair("struct Sa {int i;} fn void main(){Sa a; int i = a.", "i"),
+                Pair("struct Sa {int i; int bb;} fn void main(){Sa a; int i = a.b", "bb"),
+        ).forEach {
             keywordCompletion(it.first, it.second)
         }
     }
@@ -65,7 +66,7 @@ class C3CompletionContributorTest : LightPlatformCodeInsightFixture4TestCase() {
     @Test
     fun testStructMember() {
         listOf(
-            Pair("struct Ab{i", "int"),
+                Pair("struct Ab{i", "int"),
         ).forEach {
             keywordCompletion(it.first, it.second)
         }
@@ -74,7 +75,7 @@ class C3CompletionContributorTest : LightPlatformCodeInsightFixture4TestCase() {
     @Test
     fun testIfStatement() {
         listOf(
-            Pair("fn void f() { int ab;if (a", "ab"),
+                Pair("fn void f() { int ab;if (a", "ab"),
         ).forEach {
             keywordCompletion(it.first, it.second)
         }
@@ -83,7 +84,7 @@ class C3CompletionContributorTest : LightPlatformCodeInsightFixture4TestCase() {
     @Test
     fun testSwitchStatement() {
         listOf(
-            Pair("fn void f() { int ab;switch (a", "ab"),
+                Pair("fn void f() { int ab;switch (a", "ab"),
         ).forEach {
             keywordCompletion(it.first, it.second)
         }
@@ -92,14 +93,14 @@ class C3CompletionContributorTest : LightPlatformCodeInsightFixture4TestCase() {
     @Test
     fun testForStatement() {
         listOf(
-            Pair("fn void f() { for(i", "int"),
-            Pair("fn void f() { for(s", "short"),
-            Pair("fn void f() { for(int abc = 0; a", "abc"),
-            Pair("fn void f() { for(int abc = 0; abc > 0;) {a", "abc"),
-            Pair("fn void f() { int abc = 0;for(int i = 0; i > 0;) {a", "abc"),
-            Pair("fn void f() { for(int abc = 0; abc > 0; a", "abc"),
+                Pair("fn void f() { for(i", "int"),
+                Pair("fn void f() { for(s", "short"),
+                Pair("fn void f() { for(int abc = 0; a", "abc"),
+                Pair("fn void f() { for(int abc = 0; abc > 0;) {a", "abc"),
+                Pair("fn void f() { int abc = 0;for(int i = 0; i > 0;) {a", "abc"),
+                Pair("fn void f() { for(int abc = 0; abc > 0; a", "abc"),
 
-            ).forEach {
+                ).forEach {
             keywordCompletion(it.first, it.second)
         }
     }

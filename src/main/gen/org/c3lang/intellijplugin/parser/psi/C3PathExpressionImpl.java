@@ -33,9 +33,9 @@ public class C3PathExpressionImpl extends ASTWrapperPsiElement implements C3Path
   }
 
   @Override
-  @NotNull
+  @Nullable
   public C3IdentExpression getIdentExpression() {
-    return findNotNullChildByClass(C3IdentExpression.class);
+    return findChildByClass(C3IdentExpression.class);
   }
 
 }
