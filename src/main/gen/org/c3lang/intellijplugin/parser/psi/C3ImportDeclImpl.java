@@ -27,9 +27,9 @@ public class C3ImportDeclImpl extends ASTWrapperPsiElement implements C3ImportDe
   }
 
   @Override
-  @NotNull
+  @Nullable
   public C3ImportPath getImportPath() {
-    return findNotNullChildByClass(C3ImportPath.class);
+    return findChildByClass(C3ImportPath.class);
   }
 
   @Override

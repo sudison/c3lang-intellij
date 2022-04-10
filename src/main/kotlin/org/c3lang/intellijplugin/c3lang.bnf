@@ -23,7 +23,9 @@ specified_import ::= IDENT (AS IDENT)?
 
 specified_import_list ::= specified_import (COMMA specified_import)*
 
-import_decl ::= IMPORT_KW import_path (COLON specified_import_list)? EOS
+import_decl ::= IMPORT_KW import_path (COLON specified_import_list)? EOS {
+pin = 1
+}
 
 import_path ::= Symbol (SCOPE Symbol)*
 

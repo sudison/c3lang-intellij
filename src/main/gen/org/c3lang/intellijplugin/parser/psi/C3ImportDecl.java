@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface C3ImportDecl extends PsiElement {
 
-  @NotNull
+  @Nullable
   C3ImportPath getImportPath();
 
   @Nullable

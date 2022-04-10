@@ -102,6 +102,21 @@ class C3NestedPathExpressionCompletionProvider() : CompletionProvider<Completion
     }
 }
 
+class C3ImportPathCompletionProvider() : CompletionProvider<CompletionParameters>() {
+    override fun addCompletions(
+            parameters: CompletionParameters,
+            context: ProcessingContext,
+            result: CompletionResultSet
+    ) {
+        val f = parameters.position.containingFile.viewProvider.virtualFile
+
+        val modules = parameters.position.project.allModules(f)
+        modules.forEach {
+            createLookup(it.name)?.let { it1 -> result.addElement(it1) }
+        }
+    }
+}
+
 
 class C3CompletionContributor : CompletionContributor() {
     companion object {
@@ -183,6 +198,15 @@ class C3CompletionContributor : CompletionContributor() {
                         psiElement(C3Types.PATH_EXPRESSION)
                 ),
                 C3NestedPathExpressionCompletionProvider()
+        )
+
+        extend(
+                CompletionType.BASIC,
+                psiElement(C3Types.IDENT).withSuperParent(
+                        2,
+                        psiElement(C3Types.IMPORT_PATH).withPrevSiblingSkipping(psiElement().whitespace(), psiElement(C3Types.IMPORT_KW))
+                ),
+                C3ImportPathCompletionProvider()
         )
     }
 }

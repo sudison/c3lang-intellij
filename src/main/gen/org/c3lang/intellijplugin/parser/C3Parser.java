@@ -1480,14 +1480,15 @@ public class C3Parser implements PsiParser, LightPsiParser {
   public static boolean import_decl(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "import_decl")) return false;
     if (!nextTokenIs(b, IMPORT_KW)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, IMPORT_DECL, null);
     r = consumeToken(b, IMPORT_KW);
-    r = r && import_path(b, l + 1);
-    r = r && import_decl_2(b, l + 1);
-    r = r && consumeToken(b, EOS);
-    exit_section_(b, m, IMPORT_DECL, r);
-    return r;
+    p = r; // pin = 1
+    r = r && report_error_(b, import_path(b, l + 1));
+    r = p && report_error_(b, import_decl_2(b, l + 1)) && r;
+    r = p && consumeToken(b, EOS) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // (COLON specified_import_list)?

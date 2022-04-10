@@ -1,5 +1,7 @@
 package org.c3lang.intellijplugin.completion
 
+import com.intellij.openapi.project.Project
+import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.patterns.ElementPattern
 import com.intellij.patterns.ObjectPattern
 import com.intellij.patterns.PatternCondition
@@ -78,4 +80,8 @@ fun C3StructDeclaration.members(): List<Type> {
         }
         result
     }.orEmpty()
+}
+
+fun Project.allModules(f: VirtualFile): List<Module> {
+    return loadAllModules(this, f)
 }

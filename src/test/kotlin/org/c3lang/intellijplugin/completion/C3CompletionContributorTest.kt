@@ -1,6 +1,7 @@
 package org.c3lang.intellijplugin.completion
 
 import com.intellij.testFramework.fixtures.LightPlatformCodeInsightFixture4TestCase
+import junit.framework.TestCase
 import org.c3lang.intellijplugin.C3FileType
 import org.junit.Test
 
@@ -103,5 +104,15 @@ class C3CompletionContributorTest : LightPlatformCodeInsightFixture4TestCase() {
                 ).forEach {
             keywordCompletion(it.first, it.second)
         }
+    }
+
+    @Test
+    fun testModuleImport() {
+        myFixture.addFileToProject("modulea/a.c3", "module ab;")
+        myFixture.configureByText(C3FileType, "")
+        myFixture.type("import a")
+        val l = myFixture.completeBasic()
+        TestCase.assertTrue(l.size == 1)
+        assertEquals(l[0].lookupString, "ab")
     }
 }
