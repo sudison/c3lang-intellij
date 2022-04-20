@@ -30,12 +30,24 @@ class C3TypeCompletionProvider() : CompletionProvider<CompletionParameters>() {
             result: CompletionResultSet
     ) {
         val p = result.prefixMatcher.prefix
-        val a = parameters.position.containingFile?.topLevelTypes()?.find {
-            it.nameIdentifier?.text?.startsWith(p) ?: false
-        } ?: return
-        val t = createLookup(a.nameIdentifier?.text) ?: return
-        result.addElement(t)
+        parameters.position.containingFile?.topLevelTypes()?.forEach {
+            if (it.nameIdentifier?.text?.startsWith(p) == true) {
+                val t = createLookup(it.nameIdentifier?.text)
+                if (t != null) {
+                    result.addElement(t)
+                }
+            }
+        }
 
+        val f = parameters.position.containingFile.viewProvider.virtualFile
+        parameters.position.containingFile.project.allModules(f).flatMap { it.symbols }.forEach {
+            if (it.nameIdentifier?.text?.startsWith(p) == true) {
+                val t = createLookup(it.nameIdentifier?.text)
+                if (t != null) {
+                    result.addElement(t)
+                }
+            }
+        }
     }
 }
 
@@ -61,6 +73,15 @@ class C3PathExpressionCompletionProvider() : CompletionProvider<CompletionParame
         }
 
         parameters.position.containingFile?.topLevelTypes()?.forEach {
+            if (it.nameIdentifier?.text?.startsWith(p) == true) {
+                val t = createLookup(it.nameIdentifier?.text)
+                if (t != null) {
+                    result.addElement(t)
+                }
+            }
+        }
+        val f = parameters.position.containingFile.viewProvider.virtualFile
+        parameters.position.containingFile.project.allModules(f).flatMap { it.symbols }.forEach {
             if (it.nameIdentifier?.text?.startsWith(p) == true) {
                 val t = createLookup(it.nameIdentifier?.text)
                 if (t != null) {
