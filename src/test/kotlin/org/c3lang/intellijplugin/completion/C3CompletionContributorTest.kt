@@ -135,4 +135,34 @@ class C3CompletionContributorTest : LightPlatformCodeInsightFixture4TestCase() {
         TestCase.assertTrue(l.size == 1)
         assertEquals(l[0].lookupString, "Sa")
     }
+
+    @Test
+    fun testImportModuleName() {
+        myFixture.addFileToProject("modulea/a.c3", "module ab;")
+        myFixture.configureByText(C3FileType, "")
+        myFixture.type("fn void m() {a")
+        val l = myFixture.completeBasic()
+        TestCase.assertTrue(l.size == 1)
+        assertEquals(l[0].lookupString, "ab")
+    }
+
+    @Test
+    fun testModuleScopeAllMembers() {
+        myFixture.addFileToProject("modulea/a.c3", "module ab; struct Sa;")
+        myFixture.configureByText(C3FileType, "")
+        myFixture.type("fn void m() {ab::")
+        val l = myFixture.completeBasic()
+        TestCase.assertTrue(l.size == 1)
+        assertEquals(l[0].lookupString, "Sa")
+    }
+
+    @Test
+    fun testModuleScope() {
+        myFixture.addFileToProject("modulea/a.c3", "module ab; struct Sa;")
+        myFixture.configureByText(C3FileType, "")
+        myFixture.type("fn void m() {ab::S")
+        val l = myFixture.completeBasic()
+        TestCase.assertTrue(l.size == 1)
+        assertEquals(l[0].lookupString, "Sa")
+    }
 }

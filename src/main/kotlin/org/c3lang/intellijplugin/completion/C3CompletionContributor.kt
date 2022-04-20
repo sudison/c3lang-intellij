@@ -40,7 +40,8 @@ class C3TypeCompletionProvider() : CompletionProvider<CompletionParameters>() {
         }
 
         val f = parameters.position.containingFile.viewProvider.virtualFile
-        parameters.position.containingFile.project.allModules(f).flatMap { it.symbols }.forEach {
+        val modules = parameters.position.containingFile.project.allModules(f)
+        modules.flatMap { it.symbols }.forEach {
             if (it.nameIdentifier?.text?.startsWith(p) == true) {
                 val t = createLookup(it.nameIdentifier?.text)
                 if (t != null) {
@@ -48,6 +49,8 @@ class C3TypeCompletionProvider() : CompletionProvider<CompletionParameters>() {
                 }
             }
         }
+
+
     }
 }
 
@@ -81,9 +84,19 @@ class C3PathExpressionCompletionProvider() : CompletionProvider<CompletionParame
             }
         }
         val f = parameters.position.containingFile.viewProvider.virtualFile
-        parameters.position.containingFile.project.allModules(f).flatMap { it.symbols }.forEach {
+        val modules = parameters.position.containingFile.project.allModules(f)
+        modules.flatMap { it.symbols }.forEach {
             if (it.nameIdentifier?.text?.startsWith(p) == true) {
                 val t = createLookup(it.nameIdentifier?.text)
+                if (t != null) {
+                    result.addElement(t)
+                }
+            }
+        }
+
+        modules.map { it.name }.forEach {
+            if (it.startsWith(p)) {
+                val t = createLookup(it)
                 if (t != null) {
                     result.addElement(t)
                 }
@@ -117,6 +130,41 @@ class C3NestedPathExpressionCompletionProvider() : CompletionProvider<Completion
                     }
                 } else {
                     createLookup(btr.members().find { it.name.startsWith(p) }?.name)?.let { result.addElement(it) }
+                }
+            }
+        }
+    }
+}
+
+class C3ScopePathExpressionCompletionProvider() : CompletionProvider<CompletionParameters>() {
+    override fun addCompletions(
+        parameters: CompletionParameters,
+        context: ProcessingContext,
+        result: CompletionResultSet
+    ) {
+        val p = result.prefixMatcher.prefix
+        var pathExp = parameters.position.parent
+        if (pathExp is C3IdentSymbol) {
+            pathExp = pathExp?.parent?.parent
+        }
+        if (pathExp is C3PathExpression) {
+            val f = parameters.position.containingFile.viewProvider.virtualFile
+            val modules = parameters.position.containingFile.project.allModules(f)
+
+            val s = pathExp.firstChild as C3Symbol
+            val m = modules.find { it.name == s.text }
+            if (p == "") {
+                m?.symbols?.forEach {
+                    createLookup(it.nameIdentifier?.text)?.let { it1 -> result.addElement(it1) }
+                }
+            } else {
+                m?.symbols?.forEach {
+                    if (it.nameIdentifier?.text?.startsWith(p) == true) {
+                        val t = createLookup(it.nameIdentifier?.text)
+                        if (t != null) {
+                            result.addElement(t)
+                        }
+                    }
                 }
             }
         }
@@ -213,11 +261,27 @@ class C3CompletionContributor : CompletionContributor() {
                 C3NestedPathExpressionCompletionProvider()
         )
         extend(
+            CompletionType.BASIC,
+            psiElement(C3Types.IDENT).withSuperParent(
+                3,
+                psiElement(C3Types.PATH_EXPRESSION)
+            ).withSuperParent(2, psiElement(C3Types.IDENT_EXPRESSION).withPrevSiblingSkipping(psiElement().whitespace(), psiElement(C3Types.SCOPE))),
+            C3ScopePathExpressionCompletionProvider()
+        )
+        extend(
+            CompletionType.BASIC,
+            psiElement(C3Types.INTELLIJ_RULEZ).withSuperParent(
+                1,
+                psiElement(C3Types.PATH_EXPRESSION)
+            ).withPrevSiblingSkipping(psiElement().whitespace(), psiElement(C3Types.SCOPE)),
+            C3ScopePathExpressionCompletionProvider()
+        )
+        extend(
                 CompletionType.BASIC,
                 psiElement(C3Types.INTELLIJ_RULEZ).withSuperParent(
                         1,
                         psiElement(C3Types.PATH_EXPRESSION)
-                ),
+                ).withPrevSiblingSkipping(psiElement().whitespace(), psiElement(C3Types.DOT)),
                 C3NestedPathExpressionCompletionProvider()
         )
 
